@@ -1,19 +1,23 @@
 package com.example.danilochagov.calc_3000;
 
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
     private TextView display, old_display; // the main display numbers and the old display numbers
-    private LinearLayout main_curt, addition_curt; // curtains of buttons
 
     private DecimalFormat decimalFormatShort, decimalFormatLong; // use to convert decimal numbers
+    private FragmentTransaction fragmentTransaction;
+    private FragmentManager fragmentManager;
+    private FragmentMain fragmentMain;
+    private FragmentAddition fragmentAddition;
 
     private StringBuilder stringBuilder;
     private static String operator = ""; // current operator (+, -, /, x)
@@ -27,11 +31,36 @@ public class MainActivity extends AppCompatActivity {
         display = findViewById(R.id.main_display);
         old_display = findViewById(R.id.old_display);
 
-        main_curt = findViewById(R.id.main_curtain);
-        addition_curt = findViewById(R.id.addition_curtain);
-
         decimalFormatShort = new DecimalFormat("#.#####");
         decimalFormatLong = new DecimalFormat("#.###########");
+
+        fragmentMain = new FragmentMain();
+        fragmentAddition = new FragmentAddition();
+        fragmentManager = getSupportFragmentManager();
+
+        setDefaultKeyboard();
+    }
+
+    // set main buttons
+    private void setDefaultKeyboard () {
+        fragmentTransaction = fragmentManager.beginTransaction();
+
+        if (fragmentManager.findFragmentByTag(FragmentMain.TAG) == null) {
+            fragmentTransaction.replace(R.id.place, fragmentMain);
+        }
+
+        fragmentTransaction.commit();
+    }
+
+    // set addition buttons
+    private void setAdditionKeyboard () {
+        fragmentTransaction = fragmentManager.beginTransaction();
+
+        if (fragmentManager.findFragmentByTag(FragmentAddition.TAG) == null) {
+            fragmentTransaction.replace(R.id.place, fragmentAddition);
+        }
+
+        fragmentTransaction.commit();
     }
 
     // make result of two numbers
@@ -50,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         // ------------------ pow or clean number ( 2^5  or  2 ) -----------------------
         if (one.contains("^")) {
             a = Double.parseDouble(one.substring(0, one.indexOf("^")));
+
             int pow = Integer.parseInt(one.substring(one.indexOf("^") + 1, one.length()));
 
             a = Math.pow(a, pow);
@@ -59,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (two.contains("^")) {
             b = Double.parseDouble(two.substring(0, two.indexOf("^")));
+
             int pow = Integer.parseInt(two.substring(two.indexOf("^") + 1, two.length()));
 
             b = Math.pow(b, pow);
@@ -84,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
                 result = a * b;
                 break;
 
+
             default:
                 result = 0;
         }
@@ -91,7 +123,15 @@ public class MainActivity extends AppCompatActivity {
         operator = "";
         stringBuilder.setLength(0);
 
-        return decimalFormatLong.format(result);
+        // ------------- ( 0,2 -> 0.2 ) -------------
+        String c = decimalFormatLong.format(result);
+
+        if (c.contains(",")) {
+            c = c.replace(',', '.');
+        }
+        // --------------------------------------------
+
+        return c;
     }
 
     // add numbers (0, 1, 2...)
@@ -104,11 +144,12 @@ public class MainActivity extends AppCompatActivity {
     // add operator (+, -, /...)
     public void onAddOperator (View v) {
         Button button = (Button) v;
+
         stringBuilder = new StringBuilder(" "); // add operators with spaces
+
         String dis = display.getText().toString();
 
-
-
+        // correct input and handler of actions
         if (dis.equals("-")) { // user can't set another operator after an operator
             // nothing
             return;
@@ -163,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // clear all displays
+    // clear all
     public void onDelAll (View v) {
         if (!display.getText().toString().equals("")) {
             display.setText("");
@@ -197,14 +238,12 @@ public class MainActivity extends AppCompatActivity {
 
     // show the curtain
     public void onShowCurtain (View v) {
-        main_curt.setVisibility(View.GONE);
-        addition_curt.setVisibility(View.VISIBLE);
+        setAdditionKeyboard();
     }
 
     // close the curtain
     public void onCloseCurtain (View v) {
-        main_curt.setVisibility(View.VISIBLE);
-        addition_curt.setVisibility(View.GONE);
+        setDefaultKeyboard();
     }
 
     // make square
@@ -215,9 +254,24 @@ public class MainActivity extends AppCompatActivity {
             double number = Double.parseDouble(dis); // take number
             double numberSqrt = Math.sqrt(number); // sqrt of number
 
-            display.setText(decimalFormatShort.format(numberSqrt));
+            // ---------------- ( 0,2 -> 0.2 ) --------------------
+            String c = decimalFormatShort.format(number);
 
-            String a = "Square("+decimalFormatShort.format(number)+")";
+            if (c.contains(",")) {
+                c = c.replace(',', '.');
+            }
+
+
+            String f = decimalFormatShort.format(numberSqrt);
+
+            if (f.contains(",")) {
+                f = f.replace(',', '.');
+            }
+            // ----------------------------------------------
+
+            display.setText(f);
+
+            String a = "Square("+c+")";
             old_display.setText(a);
 
             return;
@@ -227,8 +281,16 @@ public class MainActivity extends AppCompatActivity {
             double number = Double.parseDouble(dis.substring(dis.indexOf(operator) + 1, dis.length())); // take number
             double numberSqrt = Math.sqrt(number); // sqrt of number
 
+            // ---------------- ( 0,2 -> 0.2 ) --------------------
+            String f = decimalFormatShort.format(numberSqrt);
+
+            if (f.contains(",")) {
+                f = f.replace(',', '.');
+            }
+            // ----------------------------------------------
+
             dis = dis.substring(0, dis.indexOf(operator) + 2);
-            dis += decimalFormatShort.format(numberSqrt);
+            dis += f;
 
             display.setText(dis);
         }
@@ -241,11 +303,27 @@ public class MainActivity extends AppCompatActivity {
         if (!dis.equals("") && (dis.charAt(dis.length() - 1) != '%') && operator.equals("")) { // percent of the first number
             double number = Double.parseDouble(display.getText().toString()); // take number
 
-            String a = "Percent("+decimalFormatShort.format(number)+")";
+            // ---------------- ( 0,2 -> 0.2 ) --------------------
+            String c = decimalFormatShort.format(number);
+
+            if (c.contains(",")) {
+                c = c.replace(',', '.');
+            }
+            // ----------------------------------------------
+
+            String a = "Percent("+c+")";
             old_display.setText(a);
 
             number = number / 100; // percent of number
-            display.setText(decimalFormatShort.format(number));
+
+            // ---------------- ( 0,2 -> 0.2 ) --------------------
+            String f = decimalFormatShort.format(number);
+
+            if (f.contains(",")) {
+                f = f.replace(',', '.');
+            }
+            // ---------------------------
+            display.setText(f);
 
             return;
         }
@@ -254,8 +332,16 @@ public class MainActivity extends AppCompatActivity {
             double number = Double.parseDouble(dis.substring(dis.indexOf(operator) + 2, dis.length()));
             number = number / 100;
 
+            // ---------------- ( 0,2 -> 0.2 ) --------------------
+            String c = decimalFormatShort.format(number);
+
+            if (c.contains(",")) {
+                c = c.replace(",", ".");
+            }
+            // -----------------------------------------------
+
             dis = dis.substring(0, dis.indexOf(operator) + 2);
-            dis += decimalFormatShort.format(number);
+            dis += c;
 
             display.setText(dis);
         }
@@ -263,7 +349,15 @@ public class MainActivity extends AppCompatActivity {
 
     // make number PI ( 3.14.... )
     public void onNumberPI (View v) {
-        display.append(String.valueOf(decimalFormatShort.format(Math.PI)));
+        // ---------------- ( 0,2 -> 0.2 ) --------------------
+        String c = decimalFormatShort.format(Math.PI);
+
+        if (c.contains(",")) {
+            c = c.replace(",", ".");
+        }
+        // -----------------------------------------------
+
+        display.append(c);
     }
 
     // make pow of number ( 2^4 -> 16 )
@@ -282,11 +376,28 @@ public class MainActivity extends AppCompatActivity {
         if (!dis.equals("") && (dis.charAt(dis.length() - 1) != '-') && operator.equals("")) { // sin from the first number
             double number = Double.parseDouble(dis.substring(0, dis.length())); // take number
 
-            String a = "Sin("+ decimalFormatShort.format(number)+")";
+            // ---------------- ( 0,2 -> 0.2 ) --------------------
+            String c = decimalFormatShort.format(number);
+
+            if (c.contains(",")) {
+                c = c.replace(",", ".");
+            }
+            // -----------------------------------------------
+
+            String a = "Sin("+c+")";
             old_display.setText(a);
 
             number = Math.sin(number); // sin of number
-            display.setText(decimalFormatShort.format(number));
+
+            // ---------------- ( 0,2 -> 0.2 ) --------------------
+            String f = decimalFormatShort.format(number);
+
+            if (f.contains(",")) {
+                f = f.replace(",", ".");
+            }
+            // -----------------------------------------------
+
+            display.setText(f);
 
             return;
         }
@@ -295,8 +406,16 @@ public class MainActivity extends AppCompatActivity {
             double number = Double.parseDouble(dis.substring(dis.indexOf(operator) + 2, dis.length()));
             number = Math.sin(number);
 
+            // ---------------- ( 0,2 -> 0.2 ) --------------------
+            String c = decimalFormatShort.format(number);
+
+            if (c.contains(",")) {
+                c = c.replace(",", ".");
+            }
+            // -----------------------------------------------
+
             dis = dis.substring(0, dis.indexOf(operator) + 2);
-            dis += decimalFormatShort.format(number);
+            dis += c;
 
             display.setText(dis);
         }
@@ -309,11 +428,28 @@ public class MainActivity extends AppCompatActivity {
         if (!dis.equals("") && (dis.charAt(dis.length() - 1) != '-') && operator.equals("")) { // cos from the first number
             double number = Double.parseDouble(dis.substring(0, dis.length())); // take number
 
-            String a = "Cos("+ decimalFormatShort.format(number)+")";
+            // ---------------- ( 0,2 -> 0.2 ) --------------------
+            String c = decimalFormatShort.format(number);
+
+            if (c.contains(",")) {
+                c = c.replace(",", ".");
+            }
+            // -----------------------------------------------
+
+            String a = "Cos("+c+")";
             old_display.setText(a);
 
             number = Math.cos(number); // cos of number
-            display.setText(decimalFormatShort.format(number));
+
+            // ---------------- ( 0,2 -> 0.2 ) --------------------
+            String f = decimalFormatShort.format(number);
+
+            if (f.contains(",")) {
+                f = f.replace(",", ".");
+            }
+            // -----------------------------------------------
+
+            display.setText(f);
 
             return;
         }
@@ -322,8 +458,16 @@ public class MainActivity extends AppCompatActivity {
             double number = Double.parseDouble(dis.substring(dis.indexOf(operator) + 2, dis.length()));
             number = Math.cos(number);
 
+            // ---------------- ( 0,2 -> 0.2 ) --------------------
+            String c = decimalFormatShort.format(number);
+
+            if (c.contains(",")) {
+                c = c.replace(",", ".");
+            }
+            // -----------------------------------------------
+
             dis = dis.substring(0, dis.indexOf(operator) + 2);
-            dis += decimalFormatShort.format(number);
+            dis += c;
 
             display.setText(dis);
         }
@@ -336,11 +480,28 @@ public class MainActivity extends AppCompatActivity {
         if (!dis.equals("") && (dis.charAt(dis.length() - 1) != '-') && operator.equals("")) { // tan from the first number
             double number = Double.parseDouble(dis.substring(0, dis.length())); // take number
 
-            String a = "Tan("+ decimalFormatShort.format(number)+")";
+            // ---------------- ( 0,2 -> 0.2 ) --------------------
+            String c = decimalFormatShort.format(number);
+
+            if (c.contains(",")) {
+                c = c.replace(",", ".");
+            }
+            // -----------------------------------------------
+
+            String a = "Tan("+c+")";
             old_display.setText(a);
 
             number = Math.tan(number); // tan of number
-            display.setText(decimalFormatShort.format(number));
+
+            // ---------------- ( 0,2 -> 0.2 ) --------------------
+            String f = decimalFormatShort.format(number);
+
+            if (f.contains(",")) {
+                f = f.replace(",", ".");
+            }
+            // -----------------------------------------------
+
+            display.setText(f);
 
             return;
         }
@@ -349,8 +510,16 @@ public class MainActivity extends AppCompatActivity {
             double number = Double.parseDouble(dis.substring(dis.indexOf(operator) + 2, dis.length()));
             number = Math.tan(number);
 
+            // ---------------- ( 0,2 -> 0.2 ) --------------------
+            String c = decimalFormatShort.format(number);
+
+            if (c.contains(",")) {
+                c = c.replace(",", ".");
+            }
+            // -----------------------------------------------
+
             dis = dis.substring(0, dis.indexOf(operator) + 2);
-            dis += decimalFormatShort.format(number);
+            dis += c;
 
             display.setText(dis);
         }
@@ -363,11 +532,28 @@ public class MainActivity extends AppCompatActivity {
         if (!dis.equals("") && (dis.charAt(dis.length() - 1) != '-') && operator.equals("")) { // log from the first number
             double number = Double.parseDouble(dis.substring(0, dis.length())); // take number
 
-            String a = "Log("+ decimalFormatShort.format(number)+")";
+            // ---------------- ( 0,2 -> 0.2 ) --------------------
+            String c = decimalFormatShort.format(number);
+
+            if (c.contains(",")) {
+                c = c.replace(",", ".");
+            }
+            // -----------------------------------------------
+
+            String a = "Log("+c+")";
             old_display.setText(a);
 
             number = Math.log(number); // log of number
-            display.setText(decimalFormatShort.format(number));
+
+            // ---------------- ( 0,2 -> 0.2 ) --------------------
+            String f = decimalFormatShort.format(number);
+
+            if (f.contains(",")) {
+                f = f.replace(",", ".");
+            }
+            // -----------------------------------------------
+
+            display.setText(f);
 
             return;
         }
@@ -376,8 +562,16 @@ public class MainActivity extends AppCompatActivity {
             double number = Double.parseDouble(dis.substring(dis.indexOf(operator) + 2, dis.length()));
             number = Math.log(number);
 
+            // ---------------- ( 0,2 -> 0.2 ) --------------------
+            String c = decimalFormatShort.format(number);
+
+            if (c.contains(",")) {
+                c = c.replace(",", ".");
+            }
+            // -----------------------------------------------
+
             dis = dis.substring(0, dis.indexOf(operator) + 2);
-            dis += decimalFormatShort.format(number);
+            dis += c;
 
             display.setText(dis);
         }
@@ -385,6 +579,14 @@ public class MainActivity extends AppCompatActivity {
 
     // make number e ( 2.781 )
     public void onE (View v) {
-        display.append(decimalFormatShort.format(Math.E));
+        // ---------------- ( 0,2 -> 0.2 ) --------------------
+        String c = decimalFormatShort.format(Math.E);
+
+        if (c.contains(",")) {
+            c = c.replace(",", ".");
+        }
+        // -----------------------------------------------
+
+        display.append(c);
     }
 }

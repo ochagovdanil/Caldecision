@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/addition_curtain"
+    android:layout_weight="1"
+    android:background="@color/colorGreenLight_pressed"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_weight="4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="NestedWeights">
+        <ImageButton
+            android:onClick="onCloseCurtain"
+            android:layout_weight="1"
+            android:src="@drawable/ic_keyboard_arrow_right"
+            android:background="@color/colorGreenLight_pressed"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            tools:ignore="NestedWeights" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_weight="3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:onClick="onSin"
+            android:text="@string/b_sin"
+            style="@style/ButtonsNumber_green" />
+        <Button
+            android:onClick="onLog"
+            android:text="@string/b_log"
+            style="@style/ButtonsNumber_green" />
+        <ImageButton
+            android:onClick="onSqrt"
+            android:src="@drawable/math_root"
+            android:scaleType="fitCenter"
+            android:padding="28dp"
+            style="@style/ButtonsNumber_green" />
+        <Button
+            android:clickable="false"
+            style="@style/ButtonsNumber_green" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_weight="3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:onClick="onCos"
+            android:text="@string/b_cos"
+            style="@style/ButtonsNumber_green" />
+        <ImageButton
+            android:onClick="onNumberPI"
+            android:scaleType="fitCenter"
+            android:padding="28dp"
+            android:src="@drawable/math_pi"
+            style="@style/ButtonsNumber_green" />
+        <ImageButton
+            android:onClick="onPow"
+            android:src="@drawable/math_pow"
+            android:scaleType="fitCenter"
+            android:padding="28dp"
+            style="@style/ButtonsNumber_green" />
+        <Button
+            android:clickable="false"
+            style="@style/ButtonsNumber_green" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_weight="3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:onClick="onTan"
+            android:text="@string/b_tan"
+            style="@style/ButtonsNumber_green" />
+        <Button
+            android:onClick="onE"
+            android:text="@string/b_number_e"
+            style="@style/ButtonsNumber_green" />
+        <ImageButton
+            android:onClick="onPercent"
+            android:scaleType="fitCenter"
+            android:padding="28dp"
+            android:src="@drawable/math_percent"
+            style="@style/ButtonsNumber_green" />
+        <Button
+            android:clickable="false"
+            style="@style/ButtonsNumber_green" />
+
+    </LinearLayout>
+
+</LinearLayout>
