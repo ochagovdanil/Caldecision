@@ -1,5 +1,5 @@
 # Caldecision
-<div style="text-align:center;">
+<div style="align:center;">
   <img src="photos/photo-1.png" width="350px" />
   <img src="photos/photo-2.png" width="350px" />
 </div>
