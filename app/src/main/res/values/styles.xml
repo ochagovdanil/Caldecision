@@ -5,8 +5,10 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:fontFamily" tools:ignore="NewApi">@font/lato_regular</item>
     </style>
 
+    <!-- splash theme -->
     <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_background</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -19,7 +21,6 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:fontFamily" tools:ignore="NewApi">@font/lato_regular</item>
     </style>
 
     <style name="ButtonsNumber_light">
@@ -30,7 +31,6 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
         <item name="android:textSize">32sp</item>
-        <item name="android:fontFamily" tools:ignore="NewApi">@font/lato_regular</item>
     </style>
 
     <style name="ButtonsNumber_green">
@@ -42,7 +42,6 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
         <item name="android:textSize">28sp</item>
-        <item name="android:fontFamily" tools:ignore="NewApi">@font/lato_regular</item>
     </style>
 
 </resources>

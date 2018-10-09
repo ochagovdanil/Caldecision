@@ -21,7 +21,6 @@
             android:layout_marginTop="65dp"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
-            android:fontFamily="@font/lato_regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:targetApi="jelly_bean" />
@@ -37,7 +36,6 @@
             android:layout_height="wrap_content">
             <TextView
                 android:layout_gravity="end"
-                android:fontFamily="@font/lato_regular"
                 android:id="@+id/main_display"
                 android:textColor="@color/colorBlack"
                 android:textSize="47sp"
