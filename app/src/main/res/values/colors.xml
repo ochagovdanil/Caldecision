@@ -5,7 +5,6 @@
     <color name="colorWhite">#fff</color>
     <color name="colorBlack">#464646</color>
 
-    <!-- buttons colors -->
     <color name="colorGrayDark_not_pressed">#434343</color>
     <color name="colorGrayDark_pressed">#353434</color>
 

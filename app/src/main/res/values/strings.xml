@@ -1,6 +1,7 @@
 <resources>
 
     <string name="app_name">Caldecision</string>
+
     <string name="b_one">1</string>
     <string name="b_two">2</string>
     <string name="b_three">3</string>
@@ -18,6 +19,7 @@
     <string name="b_minus">-</string>
     <string name="b_equal">=</string>
     <string name="b_divide">/</string>
+
     <string name="b_percent">%</string>
     <string name="b_sin">sin</string>
     <string name="b_cos">cos</string>

@@ -110,7 +110,7 @@
                 android:textSize="30sp"
                 android:text="@string/b_del_all" />
             <ImageButton
-                android:src="@drawable/b_remove_one"
+                android:src="@drawable/ic_remove_one"
                 android:scaleType="fitCenter"
                 android:padding="17dp"
                 style="@style/ButtonsNumber_light"

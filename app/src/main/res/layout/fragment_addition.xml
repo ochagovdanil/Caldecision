@@ -40,7 +40,7 @@
             style="@style/ButtonsNumber_green" />
         <ImageButton
             android:onClick="onSqrt"
-            android:src="@drawable/math_root"
+            android:src="@drawable/ic_math_root"
             android:scaleType="fitCenter"
             android:padding="28dp"
             style="@style/ButtonsNumber_green" />
@@ -64,11 +64,11 @@
             android:onClick="onNumberPI"
             android:scaleType="fitCenter"
             android:padding="28dp"
-            android:src="@drawable/math_pi"
+            android:src="@drawable/ic_math_pi"
             style="@style/ButtonsNumber_green" />
         <ImageButton
             android:onClick="onPow"
-            android:src="@drawable/math_pow"
+            android:src="@drawable/ic_math_pow"
             android:scaleType="fitCenter"
             android:padding="28dp"
             style="@style/ButtonsNumber_green" />
@@ -96,7 +96,7 @@
             android:onClick="onPercent"
             android:scaleType="fitCenter"
             android:padding="28dp"
-            android:src="@drawable/math_percent"
+            android:src="@drawable/ic_math_percent"
             style="@style/ButtonsNumber_green" />
         <Button
             android:clickable="false"

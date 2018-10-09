@@ -7,7 +7,6 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <!-- buttons -->
     <style name="ButtonsNumber_dark">
         <item name="android:background">@drawable/button_dark</item>
         <item name="android:textColor">@color/colorWhite</item>
