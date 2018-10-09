@@ -1,4 +1,4 @@
-package com.example.danilochagov.calc_3000;
+package com.example.danilochagov.calc_3000.Main;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -8,20 +8,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.danilochagov.calc_3000.Fragments.AdditionKeyboard;
+import com.example.danilochagov.calc_3000.Fragments.DefaultKeyboard;
+import com.example.danilochagov.calc_3000.R;
+
 import java.text.DecimalFormat;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ICalculator {
     private TextView display, old_display; // the main display numbers and the old display numbers
 
-    private DecimalFormat decimalFormatShort, decimalFormatLong; // use to convert decimal numbers
+    private DecimalFormat decimalFormatShort, decimalFormatLong;
     private FragmentTransaction fragmentTransaction;
     private FragmentManager fragmentManager;
-    private FragmentMain fragmentMain;
-    private FragmentAddition fragmentAddition;
+    private DefaultKeyboard defaultKeyboard;
+    private AdditionKeyboard additionKeyboard;
 
     private StringBuilder stringBuilder;
     private static String operator = ""; // current operator (+, -, /, x)
-    private static final String TAG = "Calc"; // Log.d()
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
@@ -34,49 +37,44 @@ public class MainActivity extends AppCompatActivity {
         decimalFormatShort = new DecimalFormat("#.#####");
         decimalFormatLong = new DecimalFormat("#.###########");
 
-        fragmentMain = new FragmentMain();
-        fragmentAddition = new FragmentAddition();
+        defaultKeyboard = new DefaultKeyboard();
+        additionKeyboard = new AdditionKeyboard();
         fragmentManager = getSupportFragmentManager();
 
         setDefaultKeyboard();
     }
 
-    // set main buttons
-    private void setDefaultKeyboard () {
+    public void setDefaultKeyboard () {
         fragmentTransaction = fragmentManager.beginTransaction();
 
-        if (fragmentManager.findFragmentByTag(FragmentMain.TAG) == null) {
-            fragmentTransaction.replace(R.id.place, fragmentMain);
+        if (fragmentManager.findFragmentByTag(DefaultKeyboard.TAG) == null) {
+            fragmentTransaction.replace(R.id.place, defaultKeyboard);
         }
 
         fragmentTransaction.commit();
     }
 
-    // set addition buttons
-    private void setAdditionKeyboard () {
+    public void setAdditionKeyboard () {
         fragmentTransaction = fragmentManager.beginTransaction();
 
-        if (fragmentManager.findFragmentByTag(FragmentAddition.TAG) == null) {
-            fragmentTransaction.replace(R.id.place, fragmentAddition);
+        if (fragmentManager.findFragmentByTag(AdditionKeyboard.TAG) == null) {
+            fragmentTransaction.replace(R.id.place, additionKeyboard);
         }
 
         fragmentTransaction.commit();
     }
 
-    // make result of two numbers
-    private String makeResult () {
-        double a; // number one
-        double b; // number two
-        double result; // result of numbers
+    public String makeResult () {
+        double a;
+        double b;
+        double result;
 
-        String one, two; // numbers for manipulation
+        String one, two;
         String dis = display.getText().toString();
 
-        // search for numbers on the main display
         one = dis.substring(0, dis.indexOf(" "));
         two = dis.substring(dis.indexOf(" ") + 3, dis.length());
 
-        // ------------------ pow or clean number ( 2^5  or  2 ) -----------------------
         if (one.contains("^")) {
             a = Double.parseDouble(one.substring(0, one.indexOf("^")));
 
@@ -96,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             b = Double.parseDouble(two);
         }
-        // -----------------------------------------------------------------------------
 
         switch (operator) {
             case "+":
@@ -115,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
                 result = a * b;
                 break;
 
-
             default:
                 result = 0;
         }
@@ -123,39 +119,31 @@ public class MainActivity extends AppCompatActivity {
         operator = "";
         stringBuilder.setLength(0);
 
-        // ------------- ( 0,2 -> 0.2 ) -------------
         String c = decimalFormatLong.format(result);
-
         if (c.contains(",")) {
             c = c.replace(',', '.');
         }
-        // --------------------------------------------
 
         return c;
     }
 
-    // add numbers (0, 1, 2...)
     public void onAddNumber (View v) {
         Button button = (Button) v;
 
         display.append(button.getText());
     }
 
-    // add operator (+, -, /...)
     public void onAddOperator (View v) {
         Button button = (Button) v;
 
-        stringBuilder = new StringBuilder(" "); // add operators with spaces
+        stringBuilder = new StringBuilder(" "); // add spaces between operators
 
         String dis = display.getText().toString();
 
-        // correct input and handler of actions
-        if (dis.equals("-")) { // user can't set another operator after an operator
-            // nothing
-            return;
-        }
+        if (dis.equals("-")) return; // user can't set another operator after an operator
 
-        if (!dis.equals("") && operator.equals("")) { // just add operator after the first number
+        // add operator after the first number
+        if (!dis.equals("") && operator.equals("")) {
             stringBuilder.append(button.getText()).append(" ");
             display.append(stringBuilder);
 
@@ -163,7 +151,8 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        if (!dis.equals("") && (!operator.equals("")) && (!dis.substring(dis.length()-1, dis.length()).equals(" "))) { // do result of two numbers
+        // do result of two numbers
+        if (!dis.equals("") && (!operator.equals("")) && (!dis.substring(dis.length()-1, dis.length()).equals(" "))) {
             old_display.setText(display.getText());
             display.setText(makeResult());
 
@@ -175,7 +164,8 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        if (!dis.equals("") && (!operator.equals("")) && (dis.substring(dis.length()-1, dis.length()).equals(" "))) { // change operator after the first number
+        // change operator after the first number if user enter an operator again
+        if (!dis.equals("") && (!operator.equals("")) && (dis.substring(dis.length()-1, dis.length()).equals(" "))) {
             Button b = (Button) v;
             stringBuilder.append(" ").append(b.getText()).append(" ");
             operator = b.getText().toString();
@@ -185,12 +175,12 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        if (dis.equals("") && button.getText().toString().equals("-") && (!button.getText().toString().equals("x") && !button.getText().toString().equals("/") && !button.getText().toString().equals("+"))) { // add operator before the first number
+        // add operator before the first number
+        if (dis.equals("") && button.getText().toString().equals("-") && (!button.getText().toString().equals("x") && !button.getText().toString().equals("/") && !button.getText().toString().equals("+"))) {
             display.setText(button.getText().toString());
         }
     }
 
-    // clear one symbol
     public void onDel (View v) {
         if (!display.getText().toString().equals("")) {
             String dis = display.getText().toString();
@@ -204,7 +194,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // clear all
     public void onDelAll (View v) {
         if (!display.getText().toString().equals("")) {
             display.setText("");
@@ -214,18 +203,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // do result of two numbers
     public void onEqual (View v) {
         String dis = display.getText().toString();
 
-        if (!dis.equals("") && (!operator.equals("")) && (!dis.substring(dis.length()-1, dis.length()).equals(" "))) { // make result of two numbers
+        if (!dis.equals("") && (!operator.equals("")) && (!dis.substring(dis.length()-1, dis.length()).equals(" "))) {
             old_display.setText(display.getText());
             display.setText(makeResult());
 
             return;
         }
 
-        if (!dis.equals("") && operator.equals("") && dis.contains("^") && !dis.contains(" ") && (dis.charAt(dis.length() - 1) != '^')) { // make power of the first number
+        // make Math.pow of the first number
+        if (!dis.equals("") && operator.equals("") && dis.contains("^") && !dis.contains(" ") && (dis.charAt(dis.length() - 1) != '^')) {
             double number = Double.parseDouble(dis.substring(0, dis.indexOf("^")));
             int pow = Integer.parseInt(dis.substring(dis.indexOf("^") + 1, dis.length()));
 
@@ -236,38 +225,32 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // show the curtain
     public void onShowCurtain (View v) {
         setAdditionKeyboard();
     }
 
-    // close the curtain
     public void onCloseCurtain (View v) {
         setDefaultKeyboard();
     }
 
-    // make square
     public void onSqrt (View v) {
         String dis = display.getText().toString();
 
-        if (!dis.equals("") && operator.equals("")) { // square from the first number at display
-            double number = Double.parseDouble(dis); // take number
-            double numberSqrt = Math.sqrt(number); // sqrt of number
+        // square from the first number at display
+        if (!dis.equals("") && operator.equals("")) {
+            double number = Double.parseDouble(dis);
+            double numberSqrt = Math.sqrt(number);
 
-            // ---------------- ( 0,2 -> 0.2 ) --------------------
             String c = decimalFormatShort.format(number);
-
             if (c.contains(",")) {
                 c = c.replace(',', '.');
             }
 
 
             String f = decimalFormatShort.format(numberSqrt);
-
             if (f.contains(",")) {
                 f = f.replace(',', '.');
             }
-            // ----------------------------------------------
 
             display.setText(f);
 
@@ -277,17 +260,15 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        if (!dis.equals("") && !operator.equals("")) { // square from second number at display
-            double number = Double.parseDouble(dis.substring(dis.indexOf(operator) + 1, dis.length())); // take number
-            double numberSqrt = Math.sqrt(number); // sqrt of number
+        // square from second number at display
+        if (!dis.equals("") && !operator.equals("")) {
+            double number = Double.parseDouble(dis.substring(dis.indexOf(operator) + 1, dis.length()));
+            double numberSqrt = Math.sqrt(number);
 
-            // ---------------- ( 0,2 -> 0.2 ) --------------------
             String f = decimalFormatShort.format(numberSqrt);
-
             if (f.contains(",")) {
                 f = f.replace(',', '.');
             }
-            // ----------------------------------------------
 
             dis = dis.substring(0, dis.indexOf(operator) + 2);
             dis += f;
@@ -296,49 +277,41 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // math_percent of number ( 9 -> 0.09 )
     public void onPercent (View v) {
         String dis = display.getText().toString();
 
-        if (!dis.equals("") && (dis.charAt(dis.length() - 1) != '%') && operator.equals("")) { // percent of the first number
-            double number = Double.parseDouble(display.getText().toString()); // take number
+        // percent of the first number
+        if (!dis.equals("") && (dis.charAt(dis.length() - 1) != '%') && operator.equals("")) {
+            double number = Double.parseDouble(display.getText().toString());
 
-            // ---------------- ( 0,2 -> 0.2 ) --------------------
             String c = decimalFormatShort.format(number);
-
             if (c.contains(",")) {
                 c = c.replace(',', '.');
             }
-            // ----------------------------------------------
 
             String a = "Percent("+c+")";
             old_display.setText(a);
 
-            number = number / 100; // percent of number
+            number = number / 100;
 
-            // ---------------- ( 0,2 -> 0.2 ) --------------------
             String f = decimalFormatShort.format(number);
-
             if (f.contains(",")) {
                 f = f.replace(',', '.');
             }
-            // ---------------------------
             display.setText(f);
 
             return;
         }
 
-        if (!dis.equals("") && (dis.charAt(dis.length() - 1) != '%') && !operator.equals("")) { // percent of the second number
+        // percent of the second number
+        if (!dis.equals("") && (dis.charAt(dis.length() - 1) != '%') && !operator.equals("")) {
             double number = Double.parseDouble(dis.substring(dis.indexOf(operator) + 2, dis.length()));
             number = number / 100;
 
-            // ---------------- ( 0,2 -> 0.2 ) --------------------
             String c = decimalFormatShort.format(number);
-
             if (c.contains(",")) {
                 c = c.replace(",", ".");
             }
-            // -----------------------------------------------
 
             dis = dis.substring(0, dis.indexOf(operator) + 2);
             dis += c;
@@ -347,20 +320,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // make number PI ( 3.14.... )
     public void onNumberPI (View v) {
-        // ---------------- ( 0,2 -> 0.2 ) --------------------
         String c = decimalFormatShort.format(Math.PI);
-
         if (c.contains(",")) {
             c = c.replace(",", ".");
         }
-        // -----------------------------------------------
 
         display.append(c);
     }
 
-    // make pow of number ( 2^4 -> 16 )
     public void onPow (View v) {
         String dis = display.getText().toString();
 
@@ -369,50 +337,42 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // make sin
     public void onSin (View v) {
         String dis = display.getText().toString();
 
-        if (!dis.equals("") && (dis.charAt(dis.length() - 1) != '-') && operator.equals("")) { // sin from the first number
-            double number = Double.parseDouble(dis.substring(0, dis.length())); // take number
+        // sin from the first number
+        if (!dis.equals("") && (dis.charAt(dis.length() - 1) != '-') && operator.equals("")) {
+            double number = Double.parseDouble(dis);
 
-            // ---------------- ( 0,2 -> 0.2 ) --------------------
             String c = decimalFormatShort.format(number);
-
             if (c.contains(",")) {
                 c = c.replace(",", ".");
             }
-            // -----------------------------------------------
 
             String a = "Sin("+c+")";
             old_display.setText(a);
 
-            number = Math.sin(number); // sin of number
+            number = Math.sin(number);
 
-            // ---------------- ( 0,2 -> 0.2 ) --------------------
             String f = decimalFormatShort.format(number);
-
             if (f.contains(",")) {
                 f = f.replace(",", ".");
             }
-            // -----------------------------------------------
 
             display.setText(f);
 
             return;
         }
 
-        if (!dis.equals("") && (dis.charAt(dis.length() - 1) != '-') && !operator.equals("") && (dis.charAt(dis.length() - 1) != ' ')) { // sin from the second number
+        // sin from the second number
+        if (!dis.equals("") && (dis.charAt(dis.length() - 1) != '-') && !operator.equals("") && (dis.charAt(dis.length() - 1) != ' ')) {
             double number = Double.parseDouble(dis.substring(dis.indexOf(operator) + 2, dis.length()));
             number = Math.sin(number);
 
-            // ---------------- ( 0,2 -> 0.2 ) --------------------
             String c = decimalFormatShort.format(number);
-
             if (c.contains(",")) {
                 c = c.replace(",", ".");
             }
-            // -----------------------------------------------
 
             dis = dis.substring(0, dis.indexOf(operator) + 2);
             dis += c;
@@ -421,50 +381,42 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // make cos
     public void onCos (View v) {
         String dis = display.getText().toString();
 
-        if (!dis.equals("") && (dis.charAt(dis.length() - 1) != '-') && operator.equals("")) { // cos from the first number
-            double number = Double.parseDouble(dis.substring(0, dis.length())); // take number
+        // cos from the first number
+        if (!dis.equals("") && (dis.charAt(dis.length() - 1) != '-') && operator.equals("")) {
+            double number = Double.parseDouble(dis);
 
-            // ---------------- ( 0,2 -> 0.2 ) --------------------
             String c = decimalFormatShort.format(number);
-
             if (c.contains(",")) {
                 c = c.replace(",", ".");
             }
-            // -----------------------------------------------
 
             String a = "Cos("+c+")";
             old_display.setText(a);
 
-            number = Math.cos(number); // cos of number
+            number = Math.cos(number);
 
-            // ---------------- ( 0,2 -> 0.2 ) --------------------
             String f = decimalFormatShort.format(number);
-
             if (f.contains(",")) {
                 f = f.replace(",", ".");
             }
-            // -----------------------------------------------
 
             display.setText(f);
 
             return;
         }
 
-        if (!dis.equals("") && (dis.charAt(dis.length() - 1) != '-') && !operator.equals("") && (dis.charAt(dis.length() - 1) != ' ')) { // cos from the second number
+        // cos from the second number
+        if (!dis.equals("") && (dis.charAt(dis.length() - 1) != '-') && !operator.equals("") && (dis.charAt(dis.length() - 1) != ' ')) {
             double number = Double.parseDouble(dis.substring(dis.indexOf(operator) + 2, dis.length()));
             number = Math.cos(number);
 
-            // ---------------- ( 0,2 -> 0.2 ) --------------------
             String c = decimalFormatShort.format(number);
-
             if (c.contains(",")) {
                 c = c.replace(",", ".");
             }
-            // -----------------------------------------------
 
             dis = dis.substring(0, dis.indexOf(operator) + 2);
             dis += c;
@@ -473,50 +425,42 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // make tan
     public void onTan (View v) {
         String dis = display.getText().toString();
 
-        if (!dis.equals("") && (dis.charAt(dis.length() - 1) != '-') && operator.equals("")) { // tan from the first number
-            double number = Double.parseDouble(dis.substring(0, dis.length())); // take number
+        // tan from the first number
+        if (!dis.equals("") && (dis.charAt(dis.length() - 1) != '-') && operator.equals("")) {
+            double number = Double.parseDouble(dis);
 
-            // ---------------- ( 0,2 -> 0.2 ) --------------------
             String c = decimalFormatShort.format(number);
-
             if (c.contains(",")) {
                 c = c.replace(",", ".");
             }
-            // -----------------------------------------------
 
             String a = "Tan("+c+")";
             old_display.setText(a);
 
-            number = Math.tan(number); // tan of number
+            number = Math.tan(number);
 
-            // ---------------- ( 0,2 -> 0.2 ) --------------------
             String f = decimalFormatShort.format(number);
-
             if (f.contains(",")) {
                 f = f.replace(",", ".");
             }
-            // -----------------------------------------------
 
             display.setText(f);
 
             return;
         }
 
-        if (!dis.equals("") && (dis.charAt(dis.length() - 1) != '-') && !operator.equals("") && (dis.charAt(dis.length() - 1) != ' ')) { // tan from the second number
+        // tan from the second number
+        if (!dis.equals("") && (dis.charAt(dis.length() - 1) != '-') && !operator.equals("") && (dis.charAt(dis.length() - 1) != ' ')) {
             double number = Double.parseDouble(dis.substring(dis.indexOf(operator) + 2, dis.length()));
             number = Math.tan(number);
 
-            // ---------------- ( 0,2 -> 0.2 ) --------------------
             String c = decimalFormatShort.format(number);
-
             if (c.contains(",")) {
                 c = c.replace(",", ".");
             }
-            // -----------------------------------------------
 
             dis = dis.substring(0, dis.indexOf(operator) + 2);
             dis += c;
@@ -525,50 +469,42 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // make log
     public void onLog (View v) {
         String dis = display.getText().toString();
 
-        if (!dis.equals("") && (dis.charAt(dis.length() - 1) != '-') && operator.equals("")) { // log from the first number
-            double number = Double.parseDouble(dis.substring(0, dis.length())); // take number
+        // log from the first number
+        if (!dis.equals("") && (dis.charAt(dis.length() - 1) != '-') && operator.equals("")) {
+            double number = Double.parseDouble(dis);
 
-            // ---------------- ( 0,2 -> 0.2 ) --------------------
             String c = decimalFormatShort.format(number);
-
             if (c.contains(",")) {
                 c = c.replace(",", ".");
             }
-            // -----------------------------------------------
 
             String a = "Log("+c+")";
             old_display.setText(a);
 
-            number = Math.log(number); // log of number
+            number = Math.log(number);
 
-            // ---------------- ( 0,2 -> 0.2 ) --------------------
             String f = decimalFormatShort.format(number);
-
             if (f.contains(",")) {
                 f = f.replace(",", ".");
             }
-            // -----------------------------------------------
 
             display.setText(f);
 
             return;
         }
 
-        if (!dis.equals("") && (dis.charAt(dis.length() - 1) != '-') && !operator.equals("") && (dis.charAt(dis.length() - 1) != ' ')) { // log from the second number
+        // log from the second number
+        if (!dis.equals("") && (dis.charAt(dis.length() - 1) != '-') && !operator.equals("") && (dis.charAt(dis.length() - 1) != ' ')) {
             double number = Double.parseDouble(dis.substring(dis.indexOf(operator) + 2, dis.length()));
             number = Math.log(number);
 
-            // ---------------- ( 0,2 -> 0.2 ) --------------------
             String c = decimalFormatShort.format(number);
-
             if (c.contains(",")) {
                 c = c.replace(",", ".");
             }
-            // -----------------------------------------------
 
             dis = dis.substring(0, dis.indexOf(operator) + 2);
             dis += c;
@@ -577,15 +513,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // make number e ( 2.781 )
     public void onE (View v) {
-        // ---------------- ( 0,2 -> 0.2 ) --------------------
         String c = decimalFormatShort.format(Math.E);
-
         if (c.contains(",")) {
             c = c.replace(",", ".");
         }
-        // -----------------------------------------------
 
         display.append(c);
     }

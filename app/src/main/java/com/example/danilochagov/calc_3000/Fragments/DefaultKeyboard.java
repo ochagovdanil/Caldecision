@@ -1,4 +1,4 @@
-package com.example.danilochagov.calc_3000;
+package com.example.danilochagov.calc_3000.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class FragmentMain extends Fragment {
+import com.example.danilochagov.calc_3000.R;
+
+public class DefaultKeyboard extends Fragment {
     public final static String TAG = "Fragment Main";
 
     @Nullable
