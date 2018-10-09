@@ -2,8 +2,8 @@
 _Here it's_
 
 <div align="center">
-  <img src="photos/photo-1.png" width="350px" />
-  <img src="photos/photo-2.png" width="350px" />
+  <img src="screenshots/photo-1.png" width="350px" />
+  <img src="screenshots/photo-2.png" width="350px" />
 </div> <br />
 
 _Caldecision - calculator for Android on Java. This app has the material design view and has lots of functions._
