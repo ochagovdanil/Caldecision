@@ -11,7 +11,7 @@ _Caldecision - calculator for Android on Java. This app has the material design 
  * Name - Caldecision
  * Android 4.0(API 14) or higher
  * Version of app - 1.2
- * Size - 684 KB
+ * Size - 3.7 MB
  * Developer - Danil Ochagov [(ochagovdanil)](https://github.com/ochagovdanil)
 
 # Getting Started
