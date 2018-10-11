@@ -1,5 +1,5 @@
 # Caldecision
-_Here it's_
+_Here is it_
 
 <div align="center">
   <img src="screenshots/photo-1.png" width="350px" />
