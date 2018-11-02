@@ -107,12 +107,10 @@
             <Button
                 style="@style/ButtonsNumber_light"
                 android:onClick="onDelAll"
-                android:textSize="30sp"
                 android:text="@string/b_del_all" />
-            <ImageButton
-                android:src="@drawable/ic_remove_one"
-                android:scaleType="fitCenter"
-                android:padding="17dp"
+            <Button
+                android:textSize="23sp"
+                android:text="@string/b_del_one"
                 style="@style/ButtonsNumber_light"
                 android:onClick="onDel" />
             <Button
@@ -143,7 +141,6 @@
         android:layout_height="wrap_content">
 
         <View
-            android:onClick="onShowCurtain"
             android:background="@color/colorGreenLight_not_pressed"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

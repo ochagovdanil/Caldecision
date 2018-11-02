@@ -1,30 +1,20 @@
 package com.example.danilochagov.calc_3000.Main;
 
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.danilochagov.calc_3000.Fragments.AdditionKeyboard;
-import com.example.danilochagov.calc_3000.Fragments.DefaultKeyboard;
 import com.example.danilochagov.calc_3000.R;
 
 import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity implements ICalculator {
-    private TextView display, old_display; // the main display numbers and the old display numbers
-
+    private TextView display, old_display;
     private DecimalFormat decimalFormatShort, decimalFormatLong;
-    private FragmentTransaction fragmentTransaction;
-    private FragmentManager fragmentManager;
-    private DefaultKeyboard defaultKeyboard;
-    private AdditionKeyboard additionKeyboard;
-
     private StringBuilder stringBuilder;
-    private static String operator = ""; // current operator (+, -, /, x)
+    private static String operator = "";
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
@@ -36,32 +26,6 @@ public class MainActivity extends AppCompatActivity implements ICalculator {
 
         decimalFormatShort = new DecimalFormat("#.#####");
         decimalFormatLong = new DecimalFormat("#.###########");
-
-        defaultKeyboard = new DefaultKeyboard();
-        additionKeyboard = new AdditionKeyboard();
-        fragmentManager = getSupportFragmentManager();
-
-        setDefaultKeyboard();
-    }
-
-    public void setDefaultKeyboard () {
-        fragmentTransaction = fragmentManager.beginTransaction();
-
-        if (fragmentManager.findFragmentByTag(DefaultKeyboard.TAG) == null) {
-            fragmentTransaction.replace(R.id.place, defaultKeyboard);
-        }
-
-        fragmentTransaction.commit();
-    }
-
-    public void setAdditionKeyboard () {
-        fragmentTransaction = fragmentManager.beginTransaction();
-
-        if (fragmentManager.findFragmentByTag(AdditionKeyboard.TAG) == null) {
-            fragmentTransaction.replace(R.id.place, additionKeyboard);
-        }
-
-        fragmentTransaction.commit();
     }
 
     public String makeResult () {
@@ -223,14 +187,6 @@ public class MainActivity extends AppCompatActivity implements ICalculator {
             String a = decimalFormatShort.format(number)+"^"+pow;
             old_display.setText(a);
         }
-    }
-
-    public void onShowCurtain (View v) {
-        setAdditionKeyboard();
-    }
-
-    public void onCloseCurtain (View v) {
-        setDefaultKeyboard();
     }
 
     public void onSqrt (View v) {

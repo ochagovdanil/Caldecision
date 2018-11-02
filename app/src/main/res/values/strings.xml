@@ -19,13 +19,16 @@
     <string name="b_minus">-</string>
     <string name="b_equal">=</string>
     <string name="b_divide">/</string>
-
-    <string name="b_percent">%</string>
     <string name="b_sin">sin</string>
     <string name="b_cos">cos</string>
     <string name="b_tan">tan</string>
     <string name="b_in">In</string>
     <string name="b_log">log</string>
     <string name="b_number_e">e</string>
+    <string name="b_del_one">DEL</string>
+    <string name="b_number_pi">П</string>
+    <string name="b_percent">%</string>
+    <string name="b_pow">^</string>
+    <string name="b_root">√</string>
 
 </resources>

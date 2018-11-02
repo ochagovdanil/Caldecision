@@ -3,12 +3,6 @@ package com.example.danilochagov.calc_3000.Main;
 import android.view.View;
 
 public interface ICalculator {
-    void setDefaultKeyboard();
-    void setAdditionKeyboard();
-
-    void onShowCurtain (View v);
-    void onCloseCurtain(View v);
-
     String makeResult();
 
     void onAddNumber (View v);

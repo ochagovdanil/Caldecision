@@ -1,28 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/addition_curtain"
-    android:layout_weight="1"
     android:background="@color/colorGreenLight_pressed"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <LinearLayout
-        android:layout_weight="4"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="NestedWeights">
-        <ImageButton
-            android:onClick="onCloseCurtain"
-            android:layout_weight="1"
-            android:src="@drawable/ic_keyboard_arrow_right"
-            android:background="@color/colorGreenLight_pressed"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            tools:ignore="NestedWeights" />
-    </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
@@ -38,14 +20,9 @@
             android:onClick="onLog"
             android:text="@string/b_log"
             style="@style/ButtonsNumber_green" />
-        <ImageButton
-            android:onClick="onSqrt"
-            android:src="@drawable/ic_math_root"
-            android:scaleType="fitCenter"
-            android:padding="28dp"
-            style="@style/ButtonsNumber_green" />
         <Button
-            android:clickable="false"
+            android:onClick="onSqrt"
+            android:text="@string/b_root"
             style="@style/ButtonsNumber_green" />
 
     </LinearLayout>
@@ -60,20 +37,14 @@
             android:onClick="onCos"
             android:text="@string/b_cos"
             style="@style/ButtonsNumber_green" />
-        <ImageButton
-            android:onClick="onNumberPI"
-            android:scaleType="fitCenter"
-            android:padding="28dp"
-            android:src="@drawable/ic_math_pi"
-            style="@style/ButtonsNumber_green" />
-        <ImageButton
-            android:onClick="onPow"
-            android:src="@drawable/ic_math_pow"
-            android:scaleType="fitCenter"
-            android:padding="28dp"
-            style="@style/ButtonsNumber_green" />
+
         <Button
-            android:clickable="false"
+            style="@style/ButtonsNumber_green"
+            android:onClick="onNumberPI"
+            android:text="@string/b_number_pi"/>
+        <Button
+            android:onClick="onPow"
+            android:text="@string/b_pow"
             style="@style/ButtonsNumber_green" />
 
     </LinearLayout>
@@ -92,14 +63,9 @@
             android:onClick="onE"
             android:text="@string/b_number_e"
             style="@style/ButtonsNumber_green" />
-        <ImageButton
-            android:onClick="onPercent"
-            android:scaleType="fitCenter"
-            android:padding="28dp"
-            android:src="@drawable/ic_math_percent"
-            style="@style/ButtonsNumber_green" />
         <Button
-            android:clickable="false"
+            android:onClick="onPercent"
+            android:text="@string/b_percent"
             style="@style/ButtonsNumber_green" />
 
     </LinearLayout>
