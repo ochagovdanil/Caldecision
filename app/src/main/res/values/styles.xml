@@ -12,8 +12,10 @@
     <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_background</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:navigationBarColor" tools:ignore="NewApi">@color/colorPrimaryDark</item>
     </style>
 
+    <!-- styles of components -->
     <style name="ButtonsNumber_dark">
         <item name="android:background">@drawable/button_dark</item>
         <item name="android:textColor">@color/colorWhite</item>
