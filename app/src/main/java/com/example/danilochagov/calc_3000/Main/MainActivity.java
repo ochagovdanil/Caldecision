@@ -46,139 +46,87 @@ public class MainActivity extends AppCompatActivity {
         String operator = button.getText().toString();
         String dis = main_display.getText().toString();
 
-        if (CURRENT_OPERATOR.equals("0")) {
-            if (dis.equals("") && operator.equals(MINUS)) { // add or '-' in the start of the expression
-                main_display.append(operator);
+        try {
+            if (CURRENT_OPERATOR.equals("0")) {
+                // add '-' or '+' in the start of the expression or user will get the error
+                if (dis.equals("") && (operator.equals(MINUS) || operator.equals(ADDITION))) {
+                    main_display.append(operator);
 
-                CURRENT_OPERATOR = "0";
-                return;
-            }
+                    CURRENT_OPERATOR = "0";
+                    return;
+                }
 
-            if (!dis.equals("") && (dis.length() > 1) && (dis.indexOf(MINUS) == 0)) { // add the operator after the first number with an operator before the first number
                 main_display.append(operator);
+                CURRENT_OPERATOR = operator;
+            } else {
+                // replace the operator after the first number
+                if (dis.indexOf(CURRENT_OPERATOR) == (dis.length() - 1)) {
+                    dis = dis.substring(0, dis.length() - 1);
+                    dis += operator;
+
+                    main_display.setText(dis);
+
+                    CURRENT_OPERATOR = operator;
+                    return;
+                }
+
+                // make result of two numbers
+                double[] numbers = expressionsCalculator.getTwoNumbers(main_display.getText().toString(), CURRENT_OPERATOR);
+
+                switch (CURRENT_OPERATOR) {
+                    case ADDITION:
+                        main_display.setText(decimalFormat.format(expressionsCalculator.addition(numbers[0], numbers[1])) + operator);
+                        break;
+
+                    case MINUS:
+                        main_display.setText(decimalFormat.format(expressionsCalculator.minus(numbers[0], numbers[1])) + operator);
+                        break;
+
+                    case MULTIPLY:
+                        main_display.setText(decimalFormat.format(expressionsCalculator.multiply(numbers[0], numbers[1])) + operator);
+                        break;
+
+                    case DIVIDE:
+                        main_display.setText(decimalFormat.format(expressionsCalculator.divide(numbers[0], numbers[1])) + operator);
+                }
+
+                old_display.setText(numbers[0] + CURRENT_OPERATOR + numbers[1]);
 
                 CURRENT_OPERATOR = operator;
-                return;
             }
-
-            if (!dis.equals("") && (dis.indexOf(MINUS) != 0)) { // add the operator after the first number without an operator before the first number
-                main_display.append(operator);
-
-                CURRENT_OPERATOR = operator;
-            }
-        } else {
-            if (dis.indexOf(CURRENT_OPERATOR) == (dis.length() - 1)) { // replace the operator after the first number
-                dis = dis.substring(0, dis.length() - 1);
-                dis += operator;
-
-                main_display.setText(dis);
-
-                CURRENT_OPERATOR = operator;
-                return;
-            }
-
-            // do result of two numbers
-            double[] numbers = expressionsCalculator.getTwoNumbers(main_display.getText().toString(), CURRENT_OPERATOR);
-
-            switch (CURRENT_OPERATOR) {
-                case ADDITION:
-                    main_display.setText(decimalFormat.format(expressionsCalculator.addition(numbers[0], numbers[1])) + operator);
-                    break;
-
-                case MINUS:
-                    main_display.setText(decimalFormat.format(expressionsCalculator.minus(numbers[0], numbers[1])) + operator);
-                    break;
-
-                case MULTIPLY:
-                    main_display.setText(decimalFormat.format(expressionsCalculator.multiply(numbers[0], numbers[1])) + operator);
-                    break;
-
-                case DIVIDE:
-                    main_display.setText(decimalFormat.format(expressionsCalculator.divide(numbers[0], numbers[1])) + operator);
-            }
-
-            old_display.setText(numbers[0] + CURRENT_OPERATOR + numbers[1]);
-
-            CURRENT_OPERATOR = operator;
+        } catch (Exception e) {
+            showError(dis);
         }
     }
 
     public void onNumberPI(View view) {
-        String dis = main_display.getText().toString();
-
-        if (dis.equals("")) { // just add PI number
-            main_display.setText(String.valueOf(decimalFormat.format(Math.PI)));
-        } else {
-            if (!dis.contains(".")) { // just add PI number
-                main_display.append(String.valueOf(decimalFormat.format(Math.PI)));
-                return;
-            }
-
-            if (dis.contains(".")) { // the second number must not have a dot
-                boolean second_number_with_dot = false;
-
-                for (int i = 0; i < dis.length(); i++) {
-                    if (dis.charAt(i) == '.' && (dis.indexOf(CURRENT_OPERATOR) < i)) {
-                        second_number_with_dot = true;
-                    }
-                }
-
-                if (!second_number_with_dot) {
-                    main_display.append(String.valueOf(decimalFormat.format(Math.PI)));
-                }
-            }
-        }
+        main_display.append(decimalFormat.format(expressionsCalculator.getNumberPI()));
     }
 
     public void onNumberE(View view) {
-        String dis = main_display.getText().toString();
-
-        if (dis.equals("")) { // just add E number
-            main_display.setText(String.valueOf(decimalFormat.format(Math.E)));
-        } else {
-            if (!dis.contains(".")) { // just add E number
-                main_display.append(String.valueOf(decimalFormat.format(Math.E)));
-                return;
-            }
-
-            if (dis.contains(".")) { // the second number must not have a dot
-                boolean second_number_with_dot = false;
-
-                for (int i = 0; i < dis.length(); i++) {
-                    if (dis.charAt(i) == '.' && (dis.indexOf(CURRENT_OPERATOR) < i)) {
-                        second_number_with_dot = true;
-                    }
-                }
-
-                if (!second_number_with_dot) {
-                    main_display.append(String.valueOf(decimalFormat.format(Math.E)));
-                }
-            }
-        }
+        main_display.append(decimalFormat.format(expressionsCalculator.getNumberE()));
     }
 
     @SuppressLint("SetTextI18n")
     public void onSin(View view) {
         String dis = main_display.getText().toString();
 
-        // sin from the first number
-        if (!dis.equals("") && CURRENT_OPERATOR.equals("0")) {
-            double number = Double.parseDouble(decimalFormat.format(Math.sin(Double.parseDouble(dis))));
+        if (!dis.equals("")) {
+            try {
+                // SINUS from the first number
+                if (CURRENT_OPERATOR.equals("0")) {
+                    old_display.setText("SIN(" + dis + ")");
+                    main_display.setText(decimalFormat.format(expressionsCalculator.sinus(Double.parseDouble(dis))));
+                } else {
+                    // SINUS from the second number
+                    double[] numbers = expressionsCalculator.getTwoNumbers(dis, CURRENT_OPERATOR);
+                    String new_expression = decimalFormat.format(numbers[0]) + CURRENT_OPERATOR + decimalFormat.format(expressionsCalculator.sinus(numbers[1]));
 
-            old_display.setText("SIN(" + dis + ")");
-            main_display.setText(String.valueOf(number));
-
-            return;
-        }
-
-        // sin from the second number
-        if (!dis.equals("") && !CURRENT_OPERATOR.equals("0")) {
-            double number = Double.parseDouble(decimalFormat.format(Math.sin(Double.parseDouble(dis.substring(dis.indexOf(CURRENT_OPERATOR) + 1)))));
-
-            dis = dis.substring(0, dis.indexOf(CURRENT_OPERATOR) + 1);
-            dis += number;
-
-            main_display.setText(dis);
+                    main_display.setText(new_expression);
+                }
+            } catch (Exception e) {
+                showError(dis);
+            }
         }
     }
 
@@ -186,24 +134,22 @@ public class MainActivity extends AppCompatActivity {
     public void onCos(View view) {
         String dis = main_display.getText().toString();
 
-        // cos from the first number
-        if (!dis.equals("") && CURRENT_OPERATOR.equals("0")) {
-            double number = Double.parseDouble(decimalFormat.format(Math.cos(Double.parseDouble(dis))));
+        if (!dis.equals("")) {
+            try {
+                // COSINUS from the first number
+                if (CURRENT_OPERATOR.equals("0")) {
+                    old_display.setText("COS(" + dis + ")");
+                    main_display.setText(decimalFormat.format(expressionsCalculator.cosinus(Double.parseDouble(dis))));
+                } else {
+                    // COSINUS from the second number
+                    double[] numbers = expressionsCalculator.getTwoNumbers(dis, CURRENT_OPERATOR);
+                    String new_expression = decimalFormat.format(numbers[0]) + CURRENT_OPERATOR + decimalFormat.format(expressionsCalculator.cosinus(numbers[1]));
 
-            old_display.setText("COS(" + dis + ")");
-            main_display.setText(String.valueOf(number));
-
-            return;
-        }
-
-        // cos from the second number
-        if (!dis.equals("") && !CURRENT_OPERATOR.equals("0")) {
-            double number = Double.parseDouble(decimalFormat.format(Math.cos(Double.parseDouble(dis.substring(dis.indexOf(CURRENT_OPERATOR) + 1)))));
-
-            dis = dis.substring(0, dis.indexOf(CURRENT_OPERATOR) + 1);
-            dis += number;
-
-            main_display.setText(dis);
+                    main_display.setText(new_expression);
+                }
+            } catch (Exception e) {
+                showError(dis);
+            }
         }
     }
 
@@ -211,24 +157,22 @@ public class MainActivity extends AppCompatActivity {
     public void onTan(View view) {
         String dis = main_display.getText().toString();
 
-        // tan from the first number
-        if (!dis.equals("") && CURRENT_OPERATOR.equals("0")) {
-            double number = Double.parseDouble(decimalFormat.format(Math.tan(Double.parseDouble(dis))));
+        if (!dis.equals("")) {
+            try {
+                // TANGENT from the first number
+                if (CURRENT_OPERATOR.equals("0")) {
+                    old_display.setText("TAN(" + dis + ")");
+                    main_display.setText(decimalFormat.format(expressionsCalculator.tangent(Double.parseDouble(dis))));
+                } else {
+                    // TANGENT from the second number
+                    double[] numbers = expressionsCalculator.getTwoNumbers(dis, CURRENT_OPERATOR);
+                    String new_expression = decimalFormat.format(numbers[0]) + CURRENT_OPERATOR + decimalFormat.format(expressionsCalculator.tangent(numbers[1]));
 
-            old_display.setText("TAN(" + dis + ")");
-            main_display.setText(String.valueOf(number));
-
-            return;
-        }
-
-        // tan from the second number
-        if (!dis.equals("") && !CURRENT_OPERATOR.equals("0")) {
-            double number = Double.parseDouble(decimalFormat.format(Math.tan(Double.parseDouble(dis.substring(dis.indexOf(CURRENT_OPERATOR) + 1)))));
-
-            dis = dis.substring(0, dis.indexOf(CURRENT_OPERATOR) + 1);
-            dis += number;
-
-            main_display.setText(dis);
+                    main_display.setText(new_expression);
+                }
+            } catch (Exception e) {
+                showError(dis);
+            }
         }
     }
 
@@ -236,24 +180,22 @@ public class MainActivity extends AppCompatActivity {
     public void onLog(View view) {
         String dis = main_display.getText().toString();
 
-        // log from the first number
-        if (!dis.equals("") && CURRENT_OPERATOR.equals("0")) {
-            double number = Double.parseDouble(decimalFormat.format(Math.log(Double.parseDouble(dis))));
+        if (!dis.equals("")) {
+            try {
+                // LOGARITHM from the first number
+                if (CURRENT_OPERATOR.equals("0")) {
+                    old_display.setText("LOG(" + dis + ")");
+                    main_display.setText(decimalFormat.format(expressionsCalculator.logarithm(Double.parseDouble(dis))));
+                } else {
+                    // LOGARITHM from the second number
+                    double[] numbers = expressionsCalculator.getTwoNumbers(dis, CURRENT_OPERATOR);
+                    String new_expression = decimalFormat.format(numbers[0]) + CURRENT_OPERATOR + decimalFormat.format(expressionsCalculator.logarithm(numbers[1]));
 
-            old_display.setText("LOG(" + dis + ")");
-            main_display.setText(String.valueOf(number));
-
-            return;
-        }
-
-        // log from the second number
-        if (!dis.equals("") && !CURRENT_OPERATOR.equals("0")) {
-            double number = Double.parseDouble(decimalFormat.format(Math.log(Double.parseDouble(dis.substring(dis.indexOf(CURRENT_OPERATOR) + 1)))));
-
-            dis = dis.substring(0, dis.indexOf(CURRENT_OPERATOR) + 1);
-            dis += number;
-
-            main_display.setText(dis);
+                    main_display.setText(new_expression);
+                }
+            } catch (Exception e) {
+                showError(dis);
+            }
         }
     }
 
@@ -261,24 +203,22 @@ public class MainActivity extends AppCompatActivity {
     public void onSqrt(View view) {
         String dis = main_display.getText().toString();
 
-        // square from the first number
-        if (!dis.equals("") && CURRENT_OPERATOR.equals("0")) {
-            double number = Double.parseDouble(decimalFormat.format(Math.sqrt(Double.parseDouble(dis))));
+        if (!dis.equals("")) {
+            try {
+                // SQUARE from the first number
+                if (CURRENT_OPERATOR.equals("0")) {
+                    old_display.setText("√" + dis);
+                    main_display.setText(decimalFormat.format(expressionsCalculator.square(Double.parseDouble(dis))));
+                } else {
+                    // SQUARE from the second number
+                    double[] numbers = expressionsCalculator.getTwoNumbers(dis, CURRENT_OPERATOR);
+                    String new_expression = decimalFormat.format(numbers[0]) + CURRENT_OPERATOR + decimalFormat.format(expressionsCalculator.square(numbers[1]));
 
-            old_display.setText("Square(" + dis + ")");
-            main_display.setText(String.valueOf(number));
-
-            return;
-        }
-
-        // square from the second number
-        if (!dis.equals("") && !CURRENT_OPERATOR.equals("0")) {
-            double number = Double.parseDouble(decimalFormat.format(Math.sqrt(Double.parseDouble(dis.substring(dis.indexOf(CURRENT_OPERATOR) + 1)))));
-
-            dis = dis.substring(0, dis.indexOf(CURRENT_OPERATOR) + 1);
-            dis += number;
-
-            main_display.setText(dis);
+                    main_display.setText(new_expression);
+                }
+            } catch (Exception e) {
+                showError(dis);
+            }
         }
     }
 
@@ -286,37 +226,21 @@ public class MainActivity extends AppCompatActivity {
     public void onPercent(View view) {
         String dis = main_display.getText().toString();
 
-        // percent of the first number
-        if (!dis.equals("") && CURRENT_OPERATOR.equals("0")) {
-            double number = Double.parseDouble(decimalFormat.format(Double.parseDouble(dis) / 100));
+        if (!dis.equals("")) {
+            try {
+                // PERCENT from the first number
+                if (CURRENT_OPERATOR.equals("0")) {
+                    old_display.setText("%(" + dis + ")");
+                    main_display.setText(decimalFormat.format(expressionsCalculator.percent(Double.parseDouble(dis))));
+                } else {
+                    // PERCENT from the second number
+                    double[] numbers = expressionsCalculator.getTwoNumbers(dis, CURRENT_OPERATOR);
+                    String new_expression = decimalFormat.format(numbers[0]) + CURRENT_OPERATOR + decimalFormat.format(expressionsCalculator.percent(numbers[1]));
 
-            old_display.setText("Percent(" + dis + ")");
-            main_display.setText(String.valueOf(number));
-
-            return;
-        }
-
-        // percent of the second number
-        if (!dis.equals("") && !CURRENT_OPERATOR.equals("0")) {
-            double number = Double.parseDouble(decimalFormat.format(Double.parseDouble(dis.substring(dis.indexOf(CURRENT_OPERATOR) + 1)) / 100));
-
-            dis = dis.substring(0, dis.indexOf(CURRENT_OPERATOR) + 1);
-            dis += number;
-
-            main_display.setText(dis);
-        }
-    }
-
-    public void onPow(View view) {
-        String dis = main_display.getText().toString();
-
-        if (CURRENT_OPERATOR.equals("0")) {
-            if (!dis.equals("") && (dis.charAt(dis.length() - 1) != '^')) {
-                main_display.append("^");
-            }
-        } else {
-            if ((dis.charAt(dis.length() - 1) != '^') && (dis.charAt(dis.length() - 1) != '+') && (dis.charAt(dis.length() - 1) != '-') && (dis.charAt(dis.length() - 1) != 'x') && (dis.charAt(dis.length() - 1) != '/')) {
-                main_display.append("^");
+                    main_display.setText(new_expression);
+                }
+            } catch (Exception e) {
+                showError(dis);
             }
         }
     }
@@ -325,21 +249,7 @@ public class MainActivity extends AppCompatActivity {
     public void onEqual(View view) {
         String dis = main_display.getText().toString();
 
-        if (CURRENT_OPERATOR.equals("0") && dis.contains("^")) {
-            old_display.setText(dis);
-
-            double one = Double.parseDouble(dis.substring(0, dis.indexOf("^")));
-            double two = Double.parseDouble(dis.substring(dis.indexOf("^") + 1));
-
-            main_display.setText(decimalFormat.format(Math.pow(one, two)));
-            return;
-        }
-
-        if (!CURRENT_OPERATOR.equals("0") && dis.contains("^")) {
-            // pow
-        }
-
-        if (!CURRENT_OPERATOR.equals("0") && dis.indexOf(CURRENT_OPERATOR) != (dis.length() - 1)) { // after the operator must be numbers
+        try {
             double[] numbers = expressionsCalculator.getTwoNumbers(dis, CURRENT_OPERATOR);
 
             switch (CURRENT_OPERATOR) {
@@ -362,6 +272,8 @@ public class MainActivity extends AppCompatActivity {
             old_display.setText(numbers[0] + CURRENT_OPERATOR + numbers[1]);
 
             CURRENT_OPERATOR = "0";
+        } catch (Exception e) {
+            showError(dis);
         }
     }
 
@@ -383,5 +295,11 @@ public class MainActivity extends AppCompatActivity {
                 CURRENT_OPERATOR = "0";
             }
         }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void showError(String error) {
+        old_display.setText("Your expression failed: " + error);
+        main_display.setText("Error");
     }
 }
