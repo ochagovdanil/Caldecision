@@ -2,7 +2,7 @@ package com.example.danilochagov.calc_3000.Main;
 
 public class ExpressionsCalculator implements ICalculator {
     @Override
-    public double[] getTwoNumbers (String text, String current_operator) {
+    public double[] getTwoNumbers(String text, String current_operator) {
         double one, two;
 
         if (text.charAt(0) == '-' && current_operator.equals("-")) { // if the expression has two minus
@@ -25,22 +25,22 @@ public class ExpressionsCalculator implements ICalculator {
     }
 
     @Override
-    public double addition (double one, double two) {
+    public double addition(double one, double two) {
         return one + two;
     }
 
     @Override
-    public double minus (double one, double two) {
+    public double minus(double one, double two) {
         return one - two;
     }
 
     @Override
-    public double multiply (double one, double two) {
+    public double multiply(double one, double two) {
         return one * two;
     }
 
     @Override
-    public double divide (double one, double two) {
+    public double divide(double one, double two) {
         return one / two;
     }
 }

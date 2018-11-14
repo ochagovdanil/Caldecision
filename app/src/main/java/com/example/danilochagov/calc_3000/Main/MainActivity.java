@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private DecimalFormat decimalFormat;
 
     @Override
-    protected void onCreate (Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -32,16 +32,16 @@ public class MainActivity extends AppCompatActivity {
         old_display = findViewById(R.id.old_display);
 
         expressionsCalculator = new ExpressionsCalculator();
-        decimalFormat = new DecimalFormat("#.########");
+        decimalFormat = new DecimalFormat("#.######");
     }
 
-    public void onAddNumber (View view) {
+    public void onAddNumber(View view) {
         Button button = (Button) view;
         main_display.append(button.getText().toString());
     }
 
     @SuppressLint("SetTextI18n")
-    public void onAddOperator (View view) {
+    public void onAddOperator(View view) {
         Button button = (Button) view;
         String operator = button.getText().toString();
         String dis = main_display.getText().toString();
@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 CURRENT_OPERATOR = operator;
                 return;
             }
+
             // do result of two numbers
             double[] numbers = expressionsCalculator.getTwoNumbers(main_display.getText().toString(), CURRENT_OPERATOR);
 
@@ -102,9 +103,241 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @SuppressLint("SetTextI18n")
-    public void onEqual (View view) {
+    public void onNumberPI(View view) {
         String dis = main_display.getText().toString();
+
+        if (dis.equals("")) { // just add PI number
+            main_display.setText(String.valueOf(decimalFormat.format(Math.PI)));
+        } else {
+            if (!dis.contains(".")) { // just add PI number
+                main_display.append(String.valueOf(decimalFormat.format(Math.PI)));
+                return;
+            }
+
+            if (dis.contains(".")) { // the second number must not have a dot
+                boolean second_number_with_dot = false;
+
+                for (int i = 0; i < dis.length(); i++) {
+                    if (dis.charAt(i) == '.' && (dis.indexOf(CURRENT_OPERATOR) < i)) {
+                        second_number_with_dot = true;
+                    }
+                }
+
+                if (!second_number_with_dot) {
+                    main_display.append(String.valueOf(decimalFormat.format(Math.PI)));
+                }
+            }
+        }
+    }
+
+    public void onNumberE(View view) {
+        String dis = main_display.getText().toString();
+
+        if (dis.equals("")) { // just add E number
+            main_display.setText(String.valueOf(decimalFormat.format(Math.E)));
+        } else {
+            if (!dis.contains(".")) { // just add E number
+                main_display.append(String.valueOf(decimalFormat.format(Math.E)));
+                return;
+            }
+
+            if (dis.contains(".")) { // the second number must not have a dot
+                boolean second_number_with_dot = false;
+
+                for (int i = 0; i < dis.length(); i++) {
+                    if (dis.charAt(i) == '.' && (dis.indexOf(CURRENT_OPERATOR) < i)) {
+                        second_number_with_dot = true;
+                    }
+                }
+
+                if (!second_number_with_dot) {
+                    main_display.append(String.valueOf(decimalFormat.format(Math.E)));
+                }
+            }
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void onSin(View view) {
+        String dis = main_display.getText().toString();
+
+        // sin from the first number
+        if (!dis.equals("") && CURRENT_OPERATOR.equals("0")) {
+            double number = Double.parseDouble(decimalFormat.format(Math.sin(Double.parseDouble(dis))));
+
+            old_display.setText("SIN(" + dis + ")");
+            main_display.setText(String.valueOf(number));
+
+            return;
+        }
+
+        // sin from the second number
+        if (!dis.equals("") && !CURRENT_OPERATOR.equals("0")) {
+            double number = Double.parseDouble(decimalFormat.format(Math.sin(Double.parseDouble(dis.substring(dis.indexOf(CURRENT_OPERATOR) + 1)))));
+
+            dis = dis.substring(0, dis.indexOf(CURRENT_OPERATOR) + 1);
+            dis += number;
+
+            main_display.setText(dis);
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void onCos(View view) {
+        String dis = main_display.getText().toString();
+
+        // cos from the first number
+        if (!dis.equals("") && CURRENT_OPERATOR.equals("0")) {
+            double number = Double.parseDouble(decimalFormat.format(Math.cos(Double.parseDouble(dis))));
+
+            old_display.setText("COS(" + dis + ")");
+            main_display.setText(String.valueOf(number));
+
+            return;
+        }
+
+        // cos from the second number
+        if (!dis.equals("") && !CURRENT_OPERATOR.equals("0")) {
+            double number = Double.parseDouble(decimalFormat.format(Math.cos(Double.parseDouble(dis.substring(dis.indexOf(CURRENT_OPERATOR) + 1)))));
+
+            dis = dis.substring(0, dis.indexOf(CURRENT_OPERATOR) + 1);
+            dis += number;
+
+            main_display.setText(dis);
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void onTan(View view) {
+        String dis = main_display.getText().toString();
+
+        // tan from the first number
+        if (!dis.equals("") && CURRENT_OPERATOR.equals("0")) {
+            double number = Double.parseDouble(decimalFormat.format(Math.tan(Double.parseDouble(dis))));
+
+            old_display.setText("TAN(" + dis + ")");
+            main_display.setText(String.valueOf(number));
+
+            return;
+        }
+
+        // tan from the second number
+        if (!dis.equals("") && !CURRENT_OPERATOR.equals("0")) {
+            double number = Double.parseDouble(decimalFormat.format(Math.tan(Double.parseDouble(dis.substring(dis.indexOf(CURRENT_OPERATOR) + 1)))));
+
+            dis = dis.substring(0, dis.indexOf(CURRENT_OPERATOR) + 1);
+            dis += number;
+
+            main_display.setText(dis);
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void onLog(View view) {
+        String dis = main_display.getText().toString();
+
+        // log from the first number
+        if (!dis.equals("") && CURRENT_OPERATOR.equals("0")) {
+            double number = Double.parseDouble(decimalFormat.format(Math.log(Double.parseDouble(dis))));
+
+            old_display.setText("LOG(" + dis + ")");
+            main_display.setText(String.valueOf(number));
+
+            return;
+        }
+
+        // log from the second number
+        if (!dis.equals("") && !CURRENT_OPERATOR.equals("0")) {
+            double number = Double.parseDouble(decimalFormat.format(Math.log(Double.parseDouble(dis.substring(dis.indexOf(CURRENT_OPERATOR) + 1)))));
+
+            dis = dis.substring(0, dis.indexOf(CURRENT_OPERATOR) + 1);
+            dis += number;
+
+            main_display.setText(dis);
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void onSqrt(View view) {
+        String dis = main_display.getText().toString();
+
+        // square from the first number
+        if (!dis.equals("") && CURRENT_OPERATOR.equals("0")) {
+            double number = Double.parseDouble(decimalFormat.format(Math.sqrt(Double.parseDouble(dis))));
+
+            old_display.setText("Square(" + dis + ")");
+            main_display.setText(String.valueOf(number));
+
+            return;
+        }
+
+        // square from the second number
+        if (!dis.equals("") && !CURRENT_OPERATOR.equals("0")) {
+            double number = Double.parseDouble(decimalFormat.format(Math.sqrt(Double.parseDouble(dis.substring(dis.indexOf(CURRENT_OPERATOR) + 1)))));
+
+            dis = dis.substring(0, dis.indexOf(CURRENT_OPERATOR) + 1);
+            dis += number;
+
+            main_display.setText(dis);
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void onPercent(View view) {
+        String dis = main_display.getText().toString();
+
+        // percent of the first number
+        if (!dis.equals("") && CURRENT_OPERATOR.equals("0")) {
+            double number = Double.parseDouble(decimalFormat.format(Double.parseDouble(dis) / 100));
+
+            old_display.setText("Percent(" + dis + ")");
+            main_display.setText(String.valueOf(number));
+
+            return;
+        }
+
+        // percent of the second number
+        if (!dis.equals("") && !CURRENT_OPERATOR.equals("0")) {
+            double number = Double.parseDouble(decimalFormat.format(Double.parseDouble(dis.substring(dis.indexOf(CURRENT_OPERATOR) + 1)) / 100));
+
+            dis = dis.substring(0, dis.indexOf(CURRENT_OPERATOR) + 1);
+            dis += number;
+
+            main_display.setText(dis);
+        }
+    }
+
+    public void onPow(View view) {
+        String dis = main_display.getText().toString();
+
+        if (CURRENT_OPERATOR.equals("0")) {
+            if (!dis.equals("") && (dis.charAt(dis.length() - 1) != '^')) {
+                main_display.append("^");
+            }
+        } else {
+            if ((dis.charAt(dis.length() - 1) != '^') && (dis.charAt(dis.length() - 1) != '+') && (dis.charAt(dis.length() - 1) != '-') && (dis.charAt(dis.length() - 1) != 'x') && (dis.charAt(dis.length() - 1) != '/')) {
+                main_display.append("^");
+            }
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void onEqual(View view) {
+        String dis = main_display.getText().toString();
+
+        if (CURRENT_OPERATOR.equals("0") && dis.contains("^")) {
+            old_display.setText(dis);
+
+            double one = Double.parseDouble(dis.substring(0, dis.indexOf("^")));
+            double two = Double.parseDouble(dis.substring(dis.indexOf("^") + 1));
+
+            main_display.setText(decimalFormat.format(Math.pow(one, two)));
+            return;
+        }
+
+        if (!CURRENT_OPERATOR.equals("0") && dis.contains("^")) {
+            // pow
+        }
 
         if (!CURRENT_OPERATOR.equals("0") && dis.indexOf(CURRENT_OPERATOR) != (dis.length() - 1)) { // after the operator must be numbers
             double[] numbers = expressionsCalculator.getTwoNumbers(dis, CURRENT_OPERATOR);
@@ -132,14 +365,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void onDelAll (View view) {
+    public void onDelAll(View view) {
         main_display.setText("");
         old_display.setText("");
 
         CURRENT_OPERATOR = "0";
     }
 
-    public void onDel (View view) {
+    public void onDel(View view) {
         String dis = main_display.getText().toString();
 
         if (!dis.equals("")) {
