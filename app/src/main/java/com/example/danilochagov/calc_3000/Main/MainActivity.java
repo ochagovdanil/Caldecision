@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 CURRENT_OPERATOR = operator;
             }
         } catch (Exception e) {
-            showError(dis);
+            showError();
         }
     }
 
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                     main_display.setText(new_expression);
                 }
             } catch (Exception e) {
-                showError(dis);
+                showError();
             }
         }
     }
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                     main_display.setText(new_expression);
                 }
             } catch (Exception e) {
-                showError(dis);
+                showError();
             }
         }
     }
@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
                     main_display.setText(new_expression);
                 }
             } catch (Exception e) {
-                showError(dis);
+                showError();
             }
         }
     }
@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
                     main_display.setText(new_expression);
                 }
             } catch (Exception e) {
-                showError(dis);
+                showError();
             }
         }
     }
@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
                     main_display.setText(new_expression);
                 }
             } catch (Exception e) {
-                showError(dis);
+                showError();
             }
         }
     }
@@ -240,40 +240,56 @@ public class MainActivity extends AppCompatActivity {
                     main_display.setText(new_expression);
                 }
             } catch (Exception e) {
-                showError(dis);
+                showError();
             }
         }
+    }
+
+    public void onPow(View view) {
+        main_display.append("^");
     }
 
     @SuppressLint("SetTextI18n")
     public void onEqual(View view) {
         String dis = main_display.getText().toString();
 
-        try {
-            double[] numbers = expressionsCalculator.getTwoNumbers(dis, CURRENT_OPERATOR);
+        if (!dis.equals("")) {
+            try {
+                // if the first number has POWER statement (^)
+                if (dis.contains("^") && CURRENT_OPERATOR.equals("0")) {
+                    double[] number = expressionsCalculator.getTwoNumbersPower(dis);
 
-            switch (CURRENT_OPERATOR) {
-                case ADDITION:
-                    main_display.setText(decimalFormat.format(expressionsCalculator.addition(numbers[0], numbers[1])));
-                    break;
+                    old_display.setText(dis);
+                    main_display.setText(decimalFormat.format(expressionsCalculator.pow(number[0], number[1])));
 
-                case MINUS:
-                    main_display.setText(decimalFormat.format(expressionsCalculator.minus(numbers[0], numbers[1])));
-                    break;
+                    return;
+                }
 
-                case MULTIPLY:
-                    main_display.setText(decimalFormat.format(expressionsCalculator.multiply(numbers[0], numbers[1])));
-                    break;
+                double[] numbers = expressionsCalculator.getTwoNumbers(dis, CURRENT_OPERATOR);
 
-                case DIVIDE:
-                    main_display.setText(decimalFormat.format(expressionsCalculator.divide(numbers[0], numbers[1])));
+                switch (CURRENT_OPERATOR) {
+                    case ADDITION:
+                        main_display.setText(decimalFormat.format(expressionsCalculator.addition(numbers[0], numbers[1])));
+                        break;
+
+                    case MINUS:
+                        main_display.setText(decimalFormat.format(expressionsCalculator.minus(numbers[0], numbers[1])));
+                        break;
+
+                    case MULTIPLY:
+                        main_display.setText(decimalFormat.format(expressionsCalculator.multiply(numbers[0], numbers[1])));
+                        break;
+
+                    case DIVIDE:
+                        main_display.setText(decimalFormat.format(expressionsCalculator.divide(numbers[0], numbers[1])));
+                }
+
+                old_display.setText(numbers[0] + CURRENT_OPERATOR + numbers[1]);
+
+                CURRENT_OPERATOR = "0";
+            } catch (Exception e) {
+                showError();
             }
-
-            old_display.setText(numbers[0] + CURRENT_OPERATOR + numbers[1]);
-
-            CURRENT_OPERATOR = "0";
-        } catch (Exception e) {
-            showError(dis);
         }
     }
 
@@ -298,8 +314,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @SuppressLint("SetTextI18n")
-    private void showError(String error) {
-        old_display.setText("Your expression failed: " + error);
+    private void showError() {
         main_display.setText("Error");
     }
 }

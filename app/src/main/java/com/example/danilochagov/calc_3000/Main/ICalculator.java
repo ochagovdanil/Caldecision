@@ -1,7 +1,6 @@
 package com.example.danilochagov.calc_3000.Main;
 
 interface ICalculator {
-    double[] getTwoNumbers(String text, String current_operator);
 
     double addition(double one, double two);
 
@@ -26,4 +25,6 @@ interface ICalculator {
     double square(double number);
 
     double percent(double number);
+
+    double pow(double one, double two);
 }
