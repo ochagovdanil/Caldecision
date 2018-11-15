@@ -60,7 +60,7 @@
             android:text="@string/b_tan"
             style="@style/ButtonsNumber_green" />
         <Button
-            android:onClick="onE"
+            android:onClick="onNumberE"
             android:text="@string/b_number_e"
             style="@style/ButtonsNumber_green" />
         <Button
