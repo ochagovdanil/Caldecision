@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:fontFamily" tools:ignore="NewApi">@font/lato_regular</item>
+        <item name="android:fontFamily" tools:ignore="NewApi">@font/titillium_web_light</item>
     </style>
 
     <!-- splash theme -->
@@ -19,7 +19,7 @@
     <style name="ButtonsNumber_dark">
         <item name="android:background">@drawable/button_dark</item>
         <item name="android:textColor">@color/colorWhite</item>
-        <item name="android:textSize">32sp</item>
+        <item name="android:textSize">25sp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
@@ -32,7 +32,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:textSize">30sp</item>
+        <item name="android:textSize">25sp</item>
     </style>
 
     <style name="ButtonsNumber_green">
@@ -43,7 +43,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:textSize">30sp</item>
+        <item name="android:textSize">25sp</item>
     </style>
 
 </resources>

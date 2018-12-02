@@ -109,8 +109,8 @@
                 android:onClick="onDelAll"
                 android:text="@string/b_del_all" />
             <Button
-                android:textSize="23sp"
                 android:text="@string/b_del_one"
+                android:textSize="20sp"
                 style="@style/ButtonsNumber_light"
                 android:onClick="onDel" />
             <Button
