@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorWhite"
     android:orientation="vertical"
     tools:context=".Main.MainActivity">
@@ -18,7 +17,7 @@
             android:id="@+id/old_display"
             android:textSize="14sp"
             android:gravity="end"
-            android:layout_marginTop="65dp"
+            android:layout_marginTop="30dp"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
             android:layout_width="match_parent"
@@ -26,22 +25,17 @@
             tools:targetApi="jelly_bean" />
         <ScrollView
             android:id="@+id/scroll"
+            android:layout_margin="10dp"
             android:scrollbars="vertical"
-            android:fillViewport="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp"
-            android:paddingBottom="25dp"
-            android:layout_marginLeft="20dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
             <TextView
                 android:layout_gravity="end"
                 android:id="@+id/main_display"
                 android:textColor="@color/colorBlack"
-                android:textSize="47sp"
+                android:textSize="50sp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:targetApi="jelly_bean" />
+                android:layout_height="wrap_content" />
         </ScrollView>
 
     </LinearLayout>
