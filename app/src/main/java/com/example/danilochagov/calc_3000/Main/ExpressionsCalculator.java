@@ -21,6 +21,7 @@ public class ExpressionsCalculator implements ICalculator {
         if (text.contains("^")) {
             double number = Double.parseDouble(text.substring(0, text.indexOf("^")));
             double pow = Double.parseDouble(text.substring(text.indexOf("^") + 1));
+
             return new double[]{number, pow};
         }
 
@@ -98,9 +99,7 @@ public class ExpressionsCalculator implements ICalculator {
 
     @Override
     public double divide(double one, double two) {
-        if (two == 0) {
-            throw new ArithmeticException("Division by zero!");
-        }
+        if (two == 0) throw new ArithmeticException("Division by zero!");
 
         return one / two;
     }
