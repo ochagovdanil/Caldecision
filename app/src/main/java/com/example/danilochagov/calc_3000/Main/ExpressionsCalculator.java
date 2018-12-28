@@ -116,22 +116,22 @@ public class ExpressionsCalculator implements ICalculator {
 
     @Override
     public double sinus(double number) {
-        return Math.sin(number);
+        return Math.sin(Math.toRadians(number));
     }
 
     @Override
     public double cosinus(double number) {
-        return Math.cos(number);
+        return Math.cos(Math.toRadians(number));
     }
 
     @Override
     public double tangent(double number) {
-        return Math.tan(number);
+        return Math.tan(Math.toRadians(number));
     }
 
     @Override
     public double logarithm(double number) {
-        return Math.log(number);
+        return Math.log(number) / Math.log(10);
     }
 
     @Override
