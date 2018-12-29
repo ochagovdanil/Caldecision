@@ -315,6 +315,7 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void showError() {
+        old_display.setText("");
         main_display.setText("Error");
     }
 }
