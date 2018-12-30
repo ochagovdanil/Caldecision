@@ -5,15 +5,11 @@ public class ExpressionsCalculator implements ICalculator {
     // calculate the power number statement if need
     private String checkForPowerStatement(String number) {
         if (number.contains("^")) {
-            if (number.contains("^")) {
-                double[] pow_statement = getTwoNumbersPower(number);
-                number = String.valueOf(pow(pow_statement[0], pow_statement[1]));
+            double[] pow_statement = getTwoNumbersPower(number);
+            number = String.valueOf(pow(pow_statement[0], pow_statement[1]));
+       }
 
-                return number;
-            }
-        }
-
-        return number;
+       return number;
     }
 
     // get one number and number of power from the expression ('2^6' -> [2, 6])
