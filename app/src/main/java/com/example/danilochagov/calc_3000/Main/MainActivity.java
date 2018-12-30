@@ -1,9 +1,13 @@
 package com.example.danilochagov.calc_3000.Main;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -294,10 +298,43 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onDelAll(View view) {
-        main_display.setText("");
-        old_display.setText("");
+        deleteAllWithAnimation();
+    }
 
-        CURRENT_OPERATOR = "0";
+    private void deleteAllWithAnimation() {
+        if (Build.VERSION.SDK_INT >= 21) {
+            View myView = findViewById(R.id.view_display);
+            final View viewDel = findViewById(R.id.view_delete_all);
+
+            int x = myView.getRight();
+            int y = myView.getBottom();
+
+            int finalRadius = (int) Math.hypot(myView.getWidth(), myView.getHeight());
+
+            Animator anim = ViewAnimationUtils.createCircularReveal(myView, x, y, 0, finalRadius);
+            anim.setDuration(500);
+            viewDel.setVisibility(View.VISIBLE);
+            anim.start();
+
+            anim.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+
+                    viewDel.setVisibility(View.GONE);
+
+                    main_display.setText("");
+                    old_display.setText("");
+
+                    CURRENT_OPERATOR = "0";
+                }
+            });
+        } else {
+            main_display.setText("");
+            old_display.setText("");
+
+            CURRENT_OPERATOR = "0";
+        }
     }
 
     public void onDel(View view) {
