@@ -352,7 +352,39 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void showError() {
-        old_display.setText("");
-        main_display.setText("Error");
+        showErrorWithAnimation();
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void showErrorWithAnimation() {
+        if (Build.VERSION.SDK_INT >= 21) {
+            View myView = findViewById(R.id.view_display);
+            final View viewDel = findViewById(R.id.view_error);
+
+            int x = myView.getRight();
+            int y = myView.getBottom();
+
+            int finalRadius = (int) Math.hypot(myView.getWidth(), myView.getHeight());
+
+            Animator anim = ViewAnimationUtils.createCircularReveal(myView, x, y, 0, finalRadius);
+            anim.setDuration(500);
+            viewDel.setVisibility(View.VISIBLE);
+            anim.start();
+
+            anim.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+
+                    viewDel.setVisibility(View.GONE);
+
+                    old_display.setText("");
+                    main_display.setText("Error");
+                }
+            });
+        } else {
+            old_display.setText("");
+            main_display.setText("Error");
+        }
     }
 }

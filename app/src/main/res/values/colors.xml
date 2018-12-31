@@ -11,5 +11,6 @@
     <color name="colorGreenLight_not_pressed">#1DE9B6</color>
     <color name="colorGreenLight_pressed">#18c298</color>
     <color name="colorDark">#0C604B</color>
+    <color name="colorRed">#d2331a</color>
 
 </resources>
