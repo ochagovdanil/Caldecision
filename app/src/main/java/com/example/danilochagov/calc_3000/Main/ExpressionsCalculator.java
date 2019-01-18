@@ -39,7 +39,7 @@ public class ExpressionsCalculator implements ICalculator {
                 }
 
                 one = text.substring(0, index_operator);
-                two = text.substring(index_operator + 1, text.length());
+                two = text.substring(index_operator + 1);
 
                 one = checkForPowerStatement(one);
                 two = checkForPowerStatement(two);
@@ -58,7 +58,7 @@ public class ExpressionsCalculator implements ICalculator {
                 }
 
                 one = text.substring(0, index_operator);
-                two = text.substring(index_operator + 1, text.length());
+                two = text.substring(index_operator + 1);
 
                 one = checkForPowerStatement(one);
                 two = checkForPowerStatement(two);
@@ -67,7 +67,7 @@ public class ExpressionsCalculator implements ICalculator {
             }
 
             one = text.substring(0, text.indexOf(current_operator));
-            two = text.substring(text.indexOf(current_operator) + 1, text.length());
+            two = text.substring(text.indexOf(current_operator) + 1);
 
             one = checkForPowerStatement(one);
             two = checkForPowerStatement(two);
