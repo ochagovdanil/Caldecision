@@ -127,7 +127,7 @@ public class ExpressionsCalculator implements ICalculator {
 
     @Override
     public double logarithm(double number) {
-        return Math.log(number) / Math.log(10);
+        return Math.log10(number);
     }
 
     @Override
