@@ -298,7 +298,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onDelAll(View view) {
-        deleteAllWithAnimation();
+        if (!main_display.getText().toString().equals("") || !old_display.getText().toString().equals("")) {
+            deleteAllWithAnimation();
+        }
     }
 
     private void deleteAllWithAnimation() {
