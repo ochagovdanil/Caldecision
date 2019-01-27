@@ -20,83 +20,121 @@ public class MainActivity extends AppCompatActivity {
     private final static String MINUS = "-";
     private final static String DIVIDE = "/";
     private final static String MULTIPLY = "x";
-    private static String CURRENT_OPERATOR = "0";
 
-    private TextView main_display, old_display;
-
-    private ExpressionsCalculator expressionsCalculator;
-    private DecimalFormat decimalFormat;
+    private static String sCurrentOperator = "0";
+    private TextView mMain_display, mOld_display;
+    private ExpressionsCalculator mExpressionsCalculator;
+    private DecimalFormat mDecimalFormat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        main_display = findViewById(R.id.main_display);
-        old_display = findViewById(R.id.old_display);
+        mMain_display = findViewById(R.id.text_main_display);
+        mOld_display = findViewById(R.id.text_old_display);
 
-        expressionsCalculator = new ExpressionsCalculator();
-        decimalFormat = new DecimalFormat("#.######");
+        mExpressionsCalculator = new ExpressionsCalculator();
+        mDecimalFormat = new DecimalFormat("#.######");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     public void onAddNumber(View view) {
         Button button = (Button) view;
-        main_display.append(button.getText().toString());
+        mMain_display.append(button.getText().toString());
     }
 
     @SuppressLint("SetTextI18n")
     public void onAddOperator(View view) {
         Button button = (Button) view;
         String operator = button.getText().toString();
-        String dis = main_display.getText().toString();
+        String dis = mMain_display.getText().toString();
 
         try {
-            if (CURRENT_OPERATOR.equals("0")) {
+            if (sCurrentOperator.equals("0")) {
                 // add '-' or '+' in the start of the expression or user will get the error
                 if (dis.equals("") && (operator.equals(MINUS) || operator.equals(ADDITION))) {
-                    main_display.append(operator);
+                    mMain_display.append(operator);
+                    sCurrentOperator = "0";
 
-                    CURRENT_OPERATOR = "0";
                     return;
                 }
 
-                main_display.append(operator);
-                CURRENT_OPERATOR = operator;
+                mMain_display.append(operator);
+                sCurrentOperator = operator;
             } else {
                 // replace the operator after the first number
-                if (dis.indexOf(CURRENT_OPERATOR) == (dis.length() - 1)) {
+                if (dis.indexOf(sCurrentOperator) == (dis.length() - 1)) {
                     dis = dis.substring(0, dis.length() - 1);
                     dis += operator;
 
-                    main_display.setText(dis);
+                    mMain_display.setText(dis);
+                    sCurrentOperator = operator;
 
-                    CURRENT_OPERATOR = operator;
                     return;
                 }
 
                 // make result of two numbers
-                double[] numbers = expressionsCalculator.getTwoNumbers(main_display.getText().toString(), CURRENT_OPERATOR);
+                double[] numbers = mExpressionsCalculator.getTwoNumbers(
+                        mMain_display.getText().toString(),
+                        sCurrentOperator);
 
-                switch (CURRENT_OPERATOR) {
+                switch (sCurrentOperator) {
                     case ADDITION:
-                        main_display.setText(decimalFormat.format(expressionsCalculator.addition(numbers[0], numbers[1])) + operator);
+                        mMain_display.setText(
+                                mDecimalFormat.format(
+                                        mExpressionsCalculator.addition(numbers[0],
+                                        numbers[1])) + operator);
                         break;
 
                     case MINUS:
-                        main_display.setText(decimalFormat.format(expressionsCalculator.minus(numbers[0], numbers[1])) + operator);
+                        mMain_display.setText(
+                                mDecimalFormat.format(
+                                        mExpressionsCalculator.minus(numbers[0],
+                                        numbers[1])) + operator);
                         break;
 
                     case MULTIPLY:
-                        main_display.setText(decimalFormat.format(expressionsCalculator.multiply(numbers[0], numbers[1])) + operator);
+                        mMain_display.setText(
+                                mDecimalFormat.format(
+                                        mExpressionsCalculator.multiply(numbers[0],
+                                        numbers[1])) + operator);
                         break;
 
                     case DIVIDE:
-                        main_display.setText(decimalFormat.format(expressionsCalculator.divide(numbers[0], numbers[1])) + operator);
+                        mMain_display.setText(
+                                mDecimalFormat.format(
+                                        mExpressionsCalculator.divide(numbers[0],
+                                        numbers[1])) + operator);
                 }
 
-                old_display.setText(numbers[0] + CURRENT_OPERATOR + numbers[1]);
+                mOld_display.setText(numbers[0] + sCurrentOperator + numbers[1]);
 
-                CURRENT_OPERATOR = operator;
+                sCurrentOperator = operator;
             }
         } catch (Exception e) {
             showError();
@@ -104,29 +142,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onNumberPI(View view) {
-        main_display.append(decimalFormat.format(expressionsCalculator.getNumberPI()));
+        mMain_display.append(mDecimalFormat.format(mExpressionsCalculator.getNumberPI()));
     }
 
     public void onNumberE(View view) {
-        main_display.append(decimalFormat.format(expressionsCalculator.getNumberE()));
+        mMain_display.append(mDecimalFormat.format(mExpressionsCalculator.getNumberE()));
     }
 
     @SuppressLint("SetTextI18n")
     public void onSin(View view) {
-        String dis = main_display.getText().toString();
+        String dis = mMain_display.getText().toString();
 
         if (!dis.equals("")) {
             try {
                 // SINUS from the first number
-                if (CURRENT_OPERATOR.equals("0")) {
-                    old_display.setText("SIN(" + dis + ")");
-                    main_display.setText(decimalFormat.format(expressionsCalculator.sinus(Double.parseDouble(dis))));
+                if (sCurrentOperator.equals("0")) {
+                    mOld_display.setText("SIN(" + dis + ")");
+                    mMain_display.setText(
+                            mDecimalFormat.format(
+                                    mExpressionsCalculator.sinus(Double.parseDouble(dis))));
                 } else {
                     // SINUS from the second number
-                    double[] numbers = expressionsCalculator.getTwoNumbers(dis, CURRENT_OPERATOR);
-                    String new_expression = decimalFormat.format(numbers[0]) + CURRENT_OPERATOR + decimalFormat.format(expressionsCalculator.sinus(numbers[1]));
+                    double[] numbers = mExpressionsCalculator.getTwoNumbers(dis, sCurrentOperator);
+                    String new_expression =
+                            mDecimalFormat.format(numbers[0]) +
+                            sCurrentOperator +
+                            mDecimalFormat.format(mExpressionsCalculator.sinus(numbers[1]));
 
-                    main_display.setText(new_expression);
+                    mMain_display.setText(new_expression);
                 }
             } catch (Exception e) {
                 showError();
@@ -136,20 +179,25 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     public void onCos(View view) {
-        String dis = main_display.getText().toString();
+        String dis = mMain_display.getText().toString();
 
         if (!dis.equals("")) {
             try {
                 // COSINUS from the first number
-                if (CURRENT_OPERATOR.equals("0")) {
-                    old_display.setText("COS(" + dis + ")");
-                    main_display.setText(decimalFormat.format(expressionsCalculator.cosinus(Double.parseDouble(dis))));
+                if (sCurrentOperator.equals("0")) {
+                    mOld_display.setText("COS(" + dis + ")");
+                    mMain_display.setText(
+                            mDecimalFormat.format(
+                                    mExpressionsCalculator.cosinus(Double.parseDouble(dis))));
                 } else {
                     // COSINUS from the second number
-                    double[] numbers = expressionsCalculator.getTwoNumbers(dis, CURRENT_OPERATOR);
-                    String new_expression = decimalFormat.format(numbers[0]) + CURRENT_OPERATOR + decimalFormat.format(expressionsCalculator.cosinus(numbers[1]));
+                    double[] numbers = mExpressionsCalculator.getTwoNumbers(dis, sCurrentOperator);
+                    String new_expression =
+                            mDecimalFormat.format(numbers[0]) +
+                            sCurrentOperator +
+                            mDecimalFormat.format(mExpressionsCalculator.cosinus(numbers[1]));
 
-                    main_display.setText(new_expression);
+                    mMain_display.setText(new_expression);
                 }
             } catch (Exception e) {
                 showError();
@@ -159,20 +207,25 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     public void onTan(View view) {
-        String dis = main_display.getText().toString();
+        String dis = mMain_display.getText().toString();
 
         if (!dis.equals("")) {
             try {
                 // TANGENT from the first number
-                if (CURRENT_OPERATOR.equals("0")) {
-                    old_display.setText("TAN(" + dis + ")");
-                    main_display.setText(decimalFormat.format(expressionsCalculator.tangent(Double.parseDouble(dis))));
+                if (sCurrentOperator.equals("0")) {
+                    mOld_display.setText("TAN(" + dis + ")");
+                    mMain_display.setText(
+                            mDecimalFormat.format(
+                                    mExpressionsCalculator.tangent(Double.parseDouble(dis))));
                 } else {
                     // TANGENT from the second number
-                    double[] numbers = expressionsCalculator.getTwoNumbers(dis, CURRENT_OPERATOR);
-                    String new_expression = decimalFormat.format(numbers[0]) + CURRENT_OPERATOR + decimalFormat.format(expressionsCalculator.tangent(numbers[1]));
+                    double[] numbers = mExpressionsCalculator.getTwoNumbers(dis, sCurrentOperator);
+                    String new_expression =
+                            mDecimalFormat.format(numbers[0]) +
+                            sCurrentOperator +
+                            mDecimalFormat.format(mExpressionsCalculator.tangent(numbers[1]));
 
-                    main_display.setText(new_expression);
+                    mMain_display.setText(new_expression);
                 }
             } catch (Exception e) {
                 showError();
@@ -182,20 +235,25 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     public void onLog(View view) {
-        String dis = main_display.getText().toString();
+        String dis = mMain_display.getText().toString();
 
         if (!dis.equals("")) {
             try {
                 // LOGARITHM from the first number
-                if (CURRENT_OPERATOR.equals("0")) {
-                    old_display.setText("LOG(" + dis + ")");
-                    main_display.setText(decimalFormat.format(expressionsCalculator.logarithm(Double.parseDouble(dis))));
+                if (sCurrentOperator.equals("0")) {
+                    mOld_display.setText("LOG(" + dis + ")");
+                    mMain_display.setText(
+                            mDecimalFormat.format(
+                                    mExpressionsCalculator.logarithm(Double.parseDouble(dis))));
                 } else {
                     // LOGARITHM from the second number
-                    double[] numbers = expressionsCalculator.getTwoNumbers(dis, CURRENT_OPERATOR);
-                    String new_expression = decimalFormat.format(numbers[0]) + CURRENT_OPERATOR + decimalFormat.format(expressionsCalculator.logarithm(numbers[1]));
+                    double[] numbers = mExpressionsCalculator.getTwoNumbers(dis, sCurrentOperator);
+                    String new_expression =
+                            mDecimalFormat.format(numbers[0]) +
+                            sCurrentOperator +
+                            mDecimalFormat.format(mExpressionsCalculator.logarithm(numbers[1]));
 
-                    main_display.setText(new_expression);
+                    mMain_display.setText(new_expression);
                 }
             } catch (Exception e) {
                 showError();
@@ -205,20 +263,25 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     public void onSqrt(View view) {
-        String dis = main_display.getText().toString();
+        String dis = mMain_display.getText().toString();
 
         if (!dis.equals("")) {
             try {
                 // SQUARE from the first number
-                if (CURRENT_OPERATOR.equals("0")) {
-                    old_display.setText("√" + dis);
-                    main_display.setText(decimalFormat.format(expressionsCalculator.square(Double.parseDouble(dis))));
+                if (sCurrentOperator.equals("0")) {
+                    mOld_display.setText("√" + dis);
+                    mMain_display.setText(
+                            mDecimalFormat.format(
+                                    mExpressionsCalculator.square(Double.parseDouble(dis))));
                 } else {
                     // SQUARE from the second number
-                    double[] numbers = expressionsCalculator.getTwoNumbers(dis, CURRENT_OPERATOR);
-                    String new_expression = decimalFormat.format(numbers[0]) + CURRENT_OPERATOR + decimalFormat.format(expressionsCalculator.square(numbers[1]));
+                    double[] numbers = mExpressionsCalculator.getTwoNumbers(dis, sCurrentOperator);
+                    String new_expression =
+                            mDecimalFormat.format(numbers[0]) +
+                            sCurrentOperator +
+                            mDecimalFormat.format(mExpressionsCalculator.square(numbers[1]));
 
-                    main_display.setText(new_expression);
+                    mMain_display.setText(new_expression);
                 }
             } catch (Exception e) {
                 showError();
@@ -228,20 +291,25 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     public void onPercent(View view) {
-        String dis = main_display.getText().toString();
+        String dis = mMain_display.getText().toString();
 
         if (!dis.equals("")) {
             try {
                 // PERCENT from the first number
-                if (CURRENT_OPERATOR.equals("0")) {
-                    old_display.setText("%(" + dis + ")");
-                    main_display.setText(decimalFormat.format(expressionsCalculator.percent(Double.parseDouble(dis))));
+                if (sCurrentOperator.equals("0")) {
+                    mOld_display.setText("%(" + dis + ")");
+                    mMain_display.setText(
+                            mDecimalFormat.format(
+                                    mExpressionsCalculator.percent(Double.parseDouble(dis))));
                 } else {
                     // PERCENT from the second number
-                    double[] numbers = expressionsCalculator.getTwoNumbers(dis, CURRENT_OPERATOR);
-                    String new_expression = decimalFormat.format(numbers[0]) + CURRENT_OPERATOR + decimalFormat.format(expressionsCalculator.percent(numbers[1]));
+                    double[] numbers = mExpressionsCalculator.getTwoNumbers(dis, sCurrentOperator);
+                    String new_expression =
+                            mDecimalFormat.format(numbers[0]) +
+                            sCurrentOperator +
+                            mDecimalFormat.format(mExpressionsCalculator.percent(numbers[1]));
 
-                    main_display.setText(new_expression);
+                    mMain_display.setText(new_expression);
                 }
             } catch (Exception e) {
                 showError();
@@ -250,47 +318,60 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onPow(View view) {
-        main_display.append("^");
+        mMain_display.append("^");
     }
 
     @SuppressLint("SetTextI18n")
     public void onEqual(View view) {
-        String dis = main_display.getText().toString();
+        String dis = mMain_display.getText().toString();
 
         if (!dis.equals("")) {
             try {
                 // if the first number has POWER statement (^)
-                if (dis.contains("^") && CURRENT_OPERATOR.equals("0")) {
-                    double[] number = expressionsCalculator.getTwoNumbersPower(dis);
+                if (dis.contains("^") && sCurrentOperator.equals("0")) {
+                    double[] number = mExpressionsCalculator.getTwoNumbersPower(dis);
 
-                    old_display.setText(dis);
-                    main_display.setText(decimalFormat.format(expressionsCalculator.pow(number[0], number[1])));
+                    mOld_display.setText(dis);
+                    mMain_display.setText(mDecimalFormat.format(
+                            mExpressionsCalculator.pow(number[0],
+                            number[1])));
 
                     return;
                 }
 
-                double[] numbers = expressionsCalculator.getTwoNumbers(dis, CURRENT_OPERATOR);
+                double[] numbers = mExpressionsCalculator.getTwoNumbers(dis, sCurrentOperator);
 
-                switch (CURRENT_OPERATOR) {
+                switch (sCurrentOperator) {
                     case ADDITION:
-                        main_display.setText(decimalFormat.format(expressionsCalculator.addition(numbers[0], numbers[1])));
+                        mMain_display.setText(
+                                mDecimalFormat.format(
+                                        mExpressionsCalculator.addition(numbers[0],
+                                        numbers[1])));
                         break;
 
                     case MINUS:
-                        main_display.setText(decimalFormat.format(expressionsCalculator.minus(numbers[0], numbers[1])));
+                        mMain_display.setText(
+                                mDecimalFormat.format(
+                                        mExpressionsCalculator.minus(numbers[0],
+                                        numbers[1])));
                         break;
 
                     case MULTIPLY:
-                        main_display.setText(decimalFormat.format(expressionsCalculator.multiply(numbers[0], numbers[1])));
+                        mMain_display.setText(
+                                mDecimalFormat.format(
+                                        mExpressionsCalculator.multiply(numbers[0],
+                                        numbers[1])));
                         break;
 
                     case DIVIDE:
-                        main_display.setText(decimalFormat.format(expressionsCalculator.divide(numbers[0], numbers[1])));
+                        mMain_display.setText(
+                                mDecimalFormat.format(
+                                        mExpressionsCalculator.divide(numbers[0],
+                                        numbers[1])));
                 }
 
-                old_display.setText(numbers[0] + CURRENT_OPERATOR + numbers[1]);
-
-                CURRENT_OPERATOR = "0";
+                mOld_display.setText(numbers[0] + sCurrentOperator + numbers[1]);
+                sCurrentOperator = "0";
             } catch (Exception e) {
                 showError();
             }
@@ -298,56 +379,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onDelAll(View view) {
-        if (!main_display.getText().toString().equals("") || !old_display.getText().toString().equals("")) {
-            deleteAllWithAnimation();
-        }
-    }
+        String mainDis = mMain_display.getText().toString();
+        String oldDis = mOld_display.getText().toString();
 
-    private void deleteAllWithAnimation() {
-        if (Build.VERSION.SDK_INT >= 21) {
-            View myView = findViewById(R.id.view_display);
-            final View viewDel = findViewById(R.id.view_delete_all);
-
-            int x = myView.getRight();
-            int y = myView.getBottom();
-
-            int finalRadius = (int) Math.hypot(myView.getWidth(), myView.getHeight());
-
-            Animator anim = ViewAnimationUtils.createCircularReveal(myView, x, y, 0, finalRadius);
-            anim.setDuration(500);
-            viewDel.setVisibility(View.VISIBLE);
-            anim.start();
-
-            anim.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    super.onAnimationEnd(animation);
-
-                    viewDel.setVisibility(View.GONE);
-
-                    main_display.setText("");
-                    old_display.setText("");
-
-                    CURRENT_OPERATOR = "0";
-                }
-            });
-        } else {
-            main_display.setText("");
-            old_display.setText("");
-
-            CURRENT_OPERATOR = "0";
-        }
+        if (!mainDis.equals("") || !oldDis.equals("")) deleteAllWithAnimation();
     }
 
     public void onDel(View view) {
-        String dis = main_display.getText().toString();
+        String dis = mMain_display.getText().toString();
 
         if (!dis.equals("")) {
-            main_display.setText(dis.substring(0, dis.length() - 1));
+            mMain_display.setText(dis.substring(0, dis.length() - 1));
 
             // if the last symbol is an operator
-            if (dis.indexOf(CURRENT_OPERATOR) == (dis.length() - 1)) {
-                CURRENT_OPERATOR = "0";
+            if (dis.indexOf(sCurrentOperator) == (dis.length() - 1)) {
+                sCurrentOperator = "0";
             }
         }
     }
@@ -357,18 +403,23 @@ public class MainActivity extends AppCompatActivity {
         showErrorWithAnimation();
     }
 
-    @SuppressLint("SetTextI18n")
-    private void showErrorWithAnimation() {
+    private void deleteAllWithAnimation() {
         if (Build.VERSION.SDK_INT >= 21) {
-            View myView = findViewById(R.id.view_display);
-            final View viewDel = findViewById(R.id.view_error);
+            View myView = findViewById(R.id.layout_display);
+            final View viewDel = findViewById(R.id.view_delete_all);
 
             int x = myView.getRight();
             int y = myView.getBottom();
 
             int finalRadius = (int) Math.hypot(myView.getWidth(), myView.getHeight());
 
-            Animator anim = ViewAnimationUtils.createCircularReveal(myView, x, y, 0, finalRadius);
+            Animator anim = ViewAnimationUtils.createCircularReveal(
+                    myView,
+                    x,
+                    y,
+                    0,
+                    finalRadius
+            );
             anim.setDuration(500);
             viewDel.setVisibility(View.VISIBLE);
             anim.start();
@@ -380,13 +431,57 @@ public class MainActivity extends AppCompatActivity {
 
                     viewDel.setVisibility(View.GONE);
 
-                    old_display.setText("");
-                    main_display.setText("Error");
+                    mMain_display.setText("");
+                    mOld_display.setText("");
+
+                    sCurrentOperator = "0";
                 }
             });
         } else {
-            old_display.setText("");
-            main_display.setText("Error");
+            mMain_display.setText("");
+            mOld_display.setText("");
+
+            sCurrentOperator = "0";
         }
     }
+
+    @SuppressLint("SetTextI18n")
+    private void showErrorWithAnimation() {
+        if (Build.VERSION.SDK_INT >= 21) {
+            View myView = findViewById(R.id.layout_display);
+            final View viewDel = findViewById(R.id.view_error);
+
+            int x = myView.getRight();
+            int y = myView.getBottom();
+
+            int finalRadius = (int) Math.hypot(myView.getWidth(), myView.getHeight());
+
+            Animator anim = ViewAnimationUtils.createCircularReveal(
+                    myView,
+                    x,
+                    y,
+                    0,
+                    finalRadius
+            );
+            anim.setDuration(500);
+            viewDel.setVisibility(View.VISIBLE);
+            anim.start();
+
+            anim.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+
+                    viewDel.setVisibility(View.GONE);
+
+                    mOld_display.setText("");
+                    mMain_display.setText("Error");
+                }
+            });
+        } else {
+            mOld_display.setText("");
+            mMain_display.setText("Error");
+        }
+    }
+
 }

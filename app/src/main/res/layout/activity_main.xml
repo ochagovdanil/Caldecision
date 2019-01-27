@@ -3,13 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorWhite"
     android:orientation="vertical"
     tools:context=".Main.MainActivity">
 
     <LinearLayout
-        android:id="@+id/view_display"
+        android:id="@+id/layout_display"
         android:layout_weight="2"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -28,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
         <TextView
-            android:id="@+id/old_display"
+            android:id="@+id/text_old_display"
             android:textSize="14sp"
             android:gravity="end"
             android:layout_marginTop="90dp"
@@ -40,7 +39,7 @@
         <me.grantland.widget.AutofitTextView
             android:singleLine="true"
             android:gravity="end"
-            android:id="@+id/main_display"
+            android:id="@+id/text_main_display"
             android:textColor="@color/colorBlack"
             android:textSize="45sp"
             android:layout_marginLeft="20dp"
@@ -61,7 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <include layout="@layout/keyboard_default" />
+            <include layout="@layout/partial_keyboard_default" />
 
             <android.support.design.widget.NavigationView
                 android:id="@+id/navigation_view"
@@ -70,7 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
 
-                <include layout="@layout/keyboard_addition" />
+                <include layout="@layout/partial_keyboard_addition" />
 
             </android.support.design.widget.NavigationView>
 

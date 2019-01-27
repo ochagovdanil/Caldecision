@@ -2,82 +2,6 @@ package com.example.danilochagov.calc_3000.Main;
 
 public class ExpressionsCalculator implements ICalculator {
 
-    // calculate the power number statement if need
-    private String checkForPowerStatement(String number) {
-        if (number.contains("^")) {
-            double[] pow_statement = getTwoNumbersPower(number);
-            number = String.valueOf(pow(pow_statement[0], pow_statement[1]));
-       }
-
-       return number;
-    }
-
-    // get one number and number of power from the expression ('2^6' -> [2, 6])
-    double[] getTwoNumbersPower (String text) {
-        if (text.contains("^")) {
-            double number = Double.parseDouble(text.substring(0, text.indexOf("^")));
-            double pow = Double.parseDouble(text.substring(text.indexOf("^") + 1));
-
-            return new double[]{number, pow};
-        }
-
-        throw new IllegalArgumentException("The expression has not got the next symbol - '^'");
-    }
-
-    double[] getTwoNumbers(String text, String current_operator) {
-        if (!current_operator.equals("")) {
-            String one, two;
-
-            // if the expression has two minus
-            if (text.charAt(0) == '-' && current_operator.equals("-")) {
-                int index_operator = 0;
-
-                for (int i = 0; i < text.length(); i++) {
-                    if (text.charAt(i) == '-' && i > 0) {
-                        index_operator = i;
-                    }
-                }
-
-                one = text.substring(0, index_operator);
-                two = text.substring(index_operator + 1);
-
-                one = checkForPowerStatement(one);
-                two = checkForPowerStatement(two);
-
-                return new double[]{Double.parseDouble(one), Double.parseDouble(two)};
-            }
-
-            // if the expression has two plus
-            if (text.charAt(0) == '+' && current_operator.equals("+")) {
-                int index_operator = 0;
-
-                for (int i = 0; i < text.length(); i++) {
-                    if (text.charAt(i) == '+' && i > 0) {
-                        index_operator = i;
-                    }
-                }
-
-                one = text.substring(0, index_operator);
-                two = text.substring(index_operator + 1);
-
-                one = checkForPowerStatement(one);
-                two = checkForPowerStatement(two);
-
-                return new double[]{Double.parseDouble(one), Double.parseDouble(two)};
-            }
-
-            one = text.substring(0, text.indexOf(current_operator));
-            two = text.substring(text.indexOf(current_operator) + 1);
-
-            one = checkForPowerStatement(one);
-            two = checkForPowerStatement(two);
-
-            return new double[]{Double.parseDouble(one), Double.parseDouble(two)};
-        }
-
-        throw new IllegalArgumentException("The expression has not got a operator!");
-    }
-
     @Override
     public double addition(double one, double two) {
         return one + two;
@@ -95,7 +19,9 @@ public class ExpressionsCalculator implements ICalculator {
 
     @Override
     public double divide(double one, double two) {
-        if (two == 0) throw new ArithmeticException("Division by zero!");
+        if (two == 0) {
+            throw new ArithmeticException("Division by zero!");
+        }
 
         return one / two;
     }
@@ -143,6 +69,82 @@ public class ExpressionsCalculator implements ICalculator {
     @Override
     public double pow(double one, double two) {
         return Math.pow(one, two);
+    }
+
+    // get one number and number of power from the expression ('2^6' -> [2, 6])
+    double[] getTwoNumbersPower (String text) {
+        if (text.contains("^")) {
+            double number = Double.parseDouble(text.substring(0, text.indexOf("^")));
+            double pow = Double.parseDouble(text.substring(text.indexOf("^") + 1));
+
+            return new double[]{number, pow};
+        }
+
+        throw new IllegalArgumentException("The expression has not got the next symbol - '^'");
+    }
+
+    double[] getTwoNumbers(String text, String currentOperator) {
+        if (!currentOperator.equals("")) {
+            String one, two;
+
+            // if the expression has two minus
+            if (text.charAt(0) == '-' && currentOperator.equals("-")) {
+                int index_operator = 0;
+
+                for (int i = 0; i < text.length(); i++) {
+                    if (text.charAt(i) == '-' && i > 0) {
+                        index_operator = i;
+                    }
+                }
+
+                one = text.substring(0, index_operator);
+                two = text.substring(index_operator + 1);
+
+                one = checkForPowerStatement(one);
+                two = checkForPowerStatement(two);
+
+                return new double[]{Double.parseDouble(one), Double.parseDouble(two)};
+            }
+
+            // if the expression has two plus
+            if (text.charAt(0) == '+' && currentOperator.equals("+")) {
+                int indexOperator = 0;
+
+                for (int i = 0; i < text.length(); i++) {
+                    if (text.charAt(i) == '+' && i > 0) {
+                        indexOperator = i;
+                    }
+                }
+
+                one = text.substring(0, indexOperator);
+                two = text.substring(indexOperator + 1);
+
+                one = checkForPowerStatement(one);
+                two = checkForPowerStatement(two);
+
+                return new double[]{Double.parseDouble(one), Double.parseDouble(two)};
+            }
+
+            one = text.substring(0, text.indexOf(currentOperator));
+            two = text.substring(text.indexOf(currentOperator) + 1);
+
+            one = checkForPowerStatement(one);
+            two = checkForPowerStatement(two);
+
+            return new double[]{Double.parseDouble(one), Double.parseDouble(two)};
+        }
+
+        throw new IllegalArgumentException("The expression has not got a operator!");
+    }
+
+    // calculate the power number statement if need
+    private String checkForPowerStatement(String number) {
+        if (number.contains("^")) {
+            double[] powStatement = getTwoNumbersPower(number);
+            number = String.valueOf(pow(powStatement[0], powStatement[1]));
+        }
+
+        return number;
     }
 
 }

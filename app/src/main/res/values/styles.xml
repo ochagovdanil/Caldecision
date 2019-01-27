@@ -16,8 +16,8 @@
     </style>
 
     <!-- styles of components -->
-    <style name="ButtonsNumber_dark">
-        <item name="android:background">@drawable/button_dark</item>
+    <style name="ButtonsNumberDark">
+        <item name="android:background">@drawable/btn_dark</item>
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:textSize">25sp</item>
         <item name="android:layout_width">match_parent</item>
@@ -25,9 +25,9 @@
         <item name="android:layout_weight">1</item>
     </style>
 
-    <style name="ButtonsNumber_light">
+    <style name="ButtonsNumberLight">
         <item name="android:stateListAnimator" tools:ignore="NewApi">@null</item>
-        <item name="android:background">@drawable/button_light</item>
+        <item name="android:background">@drawable/btn_light</item>
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
@@ -35,10 +35,10 @@
         <item name="android:textSize">25sp</item>
     </style>
 
-    <style name="ButtonsNumber_green">
+    <style name="ButtonsNumberGreen">
         <item name="android:stateListAnimator" tools:ignore="NewApi">@null</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:background">@drawable/button_green</item>
+        <item name="android:background">@drawable/btn_green</item>
         <item name="android:textColor">@color/colorDark</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>

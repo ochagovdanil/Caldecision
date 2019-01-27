@@ -27,4 +27,5 @@ interface ICalculator {
     double percent(double number);
 
     double pow(double one, double two);
+
 }

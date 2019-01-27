@@ -15,15 +15,15 @@
         <Button
             android:onClick="onSin"
             android:text="@string/b_sin"
-            style="@style/ButtonsNumber_green" />
+            style="@style/ButtonsNumberGreen" />
         <Button
             android:onClick="onLog"
             android:text="@string/b_log"
-            style="@style/ButtonsNumber_green" />
+            style="@style/ButtonsNumberGreen" />
         <Button
             android:onClick="onSqrt"
             android:text="@string/b_root"
-            style="@style/ButtonsNumber_green" />
+            style="@style/ButtonsNumberGreen" />
 
     </LinearLayout>
 
@@ -36,16 +36,15 @@
         <Button
             android:onClick="onCos"
             android:text="@string/b_cos"
-            style="@style/ButtonsNumber_green" />
-
+            style="@style/ButtonsNumberGreen" />
         <Button
-            style="@style/ButtonsNumber_green"
             android:onClick="onNumberPI"
-            android:text="@string/b_number_pi"/>
+            android:text="@string/b_number_pi"
+            style="@style/ButtonsNumberGreen"/>
         <Button
             android:onClick="onPow"
             android:text="@string/b_pow"
-            style="@style/ButtonsNumber_green" />
+            style="@style/ButtonsNumberGreen" />
 
     </LinearLayout>
 
@@ -58,15 +57,15 @@
         <Button
             android:onClick="onTan"
             android:text="@string/b_tan"
-            style="@style/ButtonsNumber_green" />
+            style="@style/ButtonsNumberGreen" />
         <Button
             android:onClick="onNumberE"
             android:text="@string/b_number_e"
-            style="@style/ButtonsNumber_green" />
+            style="@style/ButtonsNumberGreen" />
         <Button
             android:onClick="onPercent"
             android:text="@string/b_percent"
-            style="@style/ButtonsNumber_green" />
+            style="@style/ButtonsNumberGreen" />
 
     </LinearLayout>
 

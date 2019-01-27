@@ -21,15 +21,15 @@
             tools:ignore="NestedWeights">
 
             <Button
-                style="@style/ButtonsNumber_dark"
+                style="@style/ButtonsNumberDark"
                 android:onClick="onAddNumber"
                 android:text="@string/b_seven" />
             <Button
-                style="@style/ButtonsNumber_dark"
+                style="@style/ButtonsNumberDark"
                 android:onClick="onAddNumber"
                 android:text="@string/b_eight" />
             <Button
-                style="@style/ButtonsNumber_dark"
+                style="@style/ButtonsNumberDark"
                 android:onClick="onAddNumber"
                 android:text="@string/b_nine" />
 
@@ -40,15 +40,15 @@
             android:layout_height="wrap_content">
 
             <Button
-                style="@style/ButtonsNumber_dark"
+                style="@style/ButtonsNumberDark"
                 android:onClick="onAddNumber"
                 android:text="@string/b_four" />
             <Button
-                style="@style/ButtonsNumber_dark"
+                style="@style/ButtonsNumberDark"
                 android:onClick="onAddNumber"
                 android:text="@string/b_five" />
             <Button
-                style="@style/ButtonsNumber_dark"
+                style="@style/ButtonsNumberDark"
                 android:onClick="onAddNumber"
                 android:text="@string/b_six" />
 
@@ -59,15 +59,15 @@
             android:layout_height="wrap_content">
 
             <Button
-                style="@style/ButtonsNumber_dark"
+                style="@style/ButtonsNumberDark"
                 android:onClick="onAddNumber"
                 android:text="@string/b_one" />
             <Button
-                style="@style/ButtonsNumber_dark"
+                style="@style/ButtonsNumberDark"
                 android:onClick="onAddNumber"
                 android:text="@string/b_two" />
             <Button
-                style="@style/ButtonsNumber_dark"
+                style="@style/ButtonsNumberDark"
                 android:onClick="onAddNumber"
                 android:text="@string/b_three" />
 
@@ -78,15 +78,15 @@
             android:layout_weight="5">
 
             <Button
-                style="@style/ButtonsNumber_dark"
+                style="@style/ButtonsNumberDark"
                 android:onClick="onAddNumber"
                 android:text="@string/b_dot" />
             <Button
-                style="@style/ButtonsNumber_dark"
+                style="@style/ButtonsNumberDark"
                 android:onClick="onAddNumber"
                 android:text="@string/b_zero" />
             <Button
-                style="@style/ButtonsNumber_dark"
+                style="@style/ButtonsNumberDark"
                 android:onClick="onEqual"
                 android:text="@string/b_equal" />
 
@@ -105,28 +105,28 @@
             android:layout_height="match_parent">
 
             <Button
-                style="@style/ButtonsNumber_light"
+                style="@style/ButtonsNumberLight"
                 android:onClick="onDelAll"
                 android:text="@string/b_del_all" />
             <Button
+                style="@style/ButtonsNumberLight"
                 android:text="@string/b_del_one"
                 android:textSize="20sp"
-                style="@style/ButtonsNumber_light"
                 android:onClick="onDel" />
             <Button
-                style="@style/ButtonsNumber_light"
+                style="@style/ButtonsNumberLight"
                 android:onClick="onAddOperator"
                 android:text="@string/b_divide" />
             <Button
-                style="@style/ButtonsNumber_light"
+                style="@style/ButtonsNumberLight"
                 android:onClick="onAddOperator"
                 android:text="@string/b_multiply" />
             <Button
-                style="@style/ButtonsNumber_light"
+                style="@style/ButtonsNumberLight"
                 android:onClick="onAddOperator"
                 android:text="@string/b_minus" />
             <Button
-                style="@style/ButtonsNumber_light"
+                style="@style/ButtonsNumberLight"
                 android:onClick="onAddOperator"
                 android:text="@string/b_plus" />
 

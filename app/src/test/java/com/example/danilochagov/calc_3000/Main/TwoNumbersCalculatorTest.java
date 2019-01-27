@@ -11,14 +11,15 @@ import java.util.Collection;
 
 @RunWith(Parameterized.class)
 public class TwoNumbersCalculatorTest {
-    private static ExpressionsCalculator expressionsCalculator;
-    private double[] expected;
-    private String expression;
-    private String operator;
+    private static ExpressionsCalculator sExpressionsCalculator;
+    private double[] mExpected;
+    private String mExpression;
+    private String mOperator;
 
-    @BeforeClass
-    public static void setUpBeforeClass() {
-        expressionsCalculator = new ExpressionsCalculator();
+    public TwoNumbersCalculatorTest(String expression, String operator, double[] expected) {
+        this.mExpression = expression;
+        this.mOperator = operator;
+        this.mExpected = expected;
     }
 
     @Parameterized.Parameters
@@ -38,20 +39,22 @@ public class TwoNumbersCalculatorTest {
         });
     }
 
-    public TwoNumbersCalculatorTest(String expression, String operator, double[] expected) {
-        this.expression = expression;
-        this.operator = operator;
-        this.expected = expected;
+    @BeforeClass
+    public static void setUpBeforeClass() {
+        sExpressionsCalculator = new ExpressionsCalculator();
     }
+
 
     @Test
     public void getTwoNumbersTest() {
-        Assert.assertTrue(Arrays.equals(expected, expressionsCalculator.getTwoNumbers(expression, operator)));
+        Assert.assertTrue(Arrays.equals(
+                mExpected,
+                sExpressionsCalculator.getTwoNumbers(mExpression, mOperator)));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void getTwoNumbersExceptionTest() {
-        expressionsCalculator.getTwoNumbers("2+6", "");
+        sExpressionsCalculator.getTwoNumbers("2+6", "");
     }
 
 }

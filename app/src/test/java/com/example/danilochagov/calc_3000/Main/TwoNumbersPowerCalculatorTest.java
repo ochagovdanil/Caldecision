@@ -11,13 +11,13 @@ import java.util.Collection;
 
 @RunWith(Parameterized.class)
 public class TwoNumbersPowerCalculatorTest {
-    private static ExpressionsCalculator expressionsCalculator;
-    private String expression;
-    private double[] expected;
+    private static ExpressionsCalculator sExpressionsCalculator;
+    private String mExpression;
+    private double[] mExpected;
 
-    @BeforeClass
-    public static void setUpBeforeClass() {
-        expressionsCalculator = new ExpressionsCalculator();
+    public TwoNumbersPowerCalculatorTest(String expression, double[] expected) {
+        this.mExpression = expression;
+        this.mExpected = expected;
     }
 
     @Parameterized.Parameters
@@ -30,19 +30,21 @@ public class TwoNumbersPowerCalculatorTest {
         });
     }
 
-    public TwoNumbersPowerCalculatorTest(String expression, double[] expected) {
-        this.expression = expression;
-        this.expected = expected;
+    @BeforeClass
+    public static void setUpBeforeClass() {
+        sExpressionsCalculator = new ExpressionsCalculator();
     }
 
     @Test
     public void getTwoNumbersPowerTest() {
-        Assert.assertTrue(Arrays.equals(expected, expressionsCalculator.getTwoNumbersPower(expression)));
+        Assert.assertTrue(Arrays.equals(
+                mExpected,
+                sExpressionsCalculator.getTwoNumbersPower(mExpression)));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void getTwoNumbersPowerExceptionTest() {
-        expressionsCalculator.getTwoNumbersPower("26");
+        sExpressionsCalculator.getTwoNumbersPower("26");
     }
 
 }
