@@ -1,4 +1,4 @@
-package com.example.danilochagov.calc_3000.Main;
+package com.example.danilochagov.calc_3000.logic;
 
 public class ExpressionsCalculator implements ICalculator {
 
@@ -72,7 +72,7 @@ public class ExpressionsCalculator implements ICalculator {
     }
 
     // get one number and number of power from the expression ('2^6' -> [2, 6])
-    double[] getTwoNumbersPower (String text) {
+    public double[] getTwoNumbersPower (String text) {
         if (text.contains("^")) {
             double number = Double.parseDouble(text.substring(0, text.indexOf("^")));
             double pow = Double.parseDouble(text.substring(text.indexOf("^") + 1));
@@ -83,7 +83,7 @@ public class ExpressionsCalculator implements ICalculator {
         throw new IllegalArgumentException("The expression has not got the next symbol - '^'");
     }
 
-    double[] getTwoNumbers(String text, String currentOperator) {
+    public double[] getTwoNumbers(String text, String currentOperator) {
         if (!currentOperator.equals("")) {
             String one, two;
 

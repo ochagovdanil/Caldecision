@@ -1,10 +1,8 @@
-package com.example.danilochagov.calc_3000.Preloader;
+package com.example.danilochagov.calc_3000.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
-import com.example.danilochagov.calc_3000.Main.MainActivity;
 
 public class SplashActivity extends AppCompatActivity {
 

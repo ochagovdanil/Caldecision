@@ -1,5 +1,7 @@
 package com.example.danilochagov.calc_3000.Main;
 
+import com.example.danilochagov.calc_3000.logic.ExpressionsCalculator;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package com.example.danilochagov.calc_3000.Main;
+package com.example.danilochagov.calc_3000.activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -11,6 +11,7 @@ import android.view.ViewAnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.danilochagov.calc_3000.logic.ExpressionsCalculator;
 import com.example.danilochagov.calc_3000.R;
 
 import java.text.DecimalFormat;

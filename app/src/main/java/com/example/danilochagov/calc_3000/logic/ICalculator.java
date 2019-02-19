@@ -1,4 +1,4 @@
-package com.example.danilochagov.calc_3000.Main;
+package com.example.danilochagov.calc_3000.logic;
 
 interface ICalculator {
 
