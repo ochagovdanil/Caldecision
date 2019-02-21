@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#00bcd4</color>
     <color name="colorWhite">#fff</color>
     <color name="colorBlack">#464646</color>
+    <color name="colorBlackDark">#000</color>
     <color name="colorGrayDark_not_pressed">#434343</color>
     <color name="colorGrayDark_pressed">#353434</color>
     <color name="colorGrayLight_not_pressed">#636363</color>
