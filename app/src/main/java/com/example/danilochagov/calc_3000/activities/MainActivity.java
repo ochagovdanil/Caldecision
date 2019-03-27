@@ -3,20 +3,30 @@ package com.example.danilochagov.calc_3000.activities;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.danilochagov.calc_3000.logic.ExpressionsCalculator;
 import com.example.danilochagov.calc_3000.R;
+import com.example.danilochagov.calc_3000.helpers.ListDialogFragment;
+import com.example.danilochagov.calc_3000.helpers.SharPref;
+import com.example.danilochagov.calc_3000.logic.ExpressionsCalculator;
+import com.example.danilochagov.calc_3000.models.EThemes;
 
 import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final int GREEN_THEME = EThemes.GREEN.getTheme();
+    private static final int ORANGE_THEME = EThemes.ORANGE.getTheme();
+    private static final int BLUE_THEME = EThemes.BLUE.getTheme();
+
     private final static String ADDITION = "+";
     private final static String MINUS = "-";
     private final static String DIVIDE = "/";
@@ -26,9 +36,12 @@ public class MainActivity extends AppCompatActivity {
     private TextView mMain_display, mOld_display;
     private ExpressionsCalculator mExpressionsCalculator;
     private DecimalFormat mDecimalFormat;
+    private SharPref mSharPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        initTheme();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -37,6 +50,14 @@ public class MainActivity extends AppCompatActivity {
 
         mExpressionsCalculator = new ExpressionsCalculator();
         mDecimalFormat = new DecimalFormat("#.######");
+
+        ImageView imageView = findViewById(R.id.image_settings);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showListOfThemes();
+            }
+        });
     }
 
     @Override
@@ -483,6 +504,46 @@ public class MainActivity extends AppCompatActivity {
             mOld_display.setText("");
             mMain_display.setText("Error");
         }
+    }
+
+    private void initTheme() {
+        mSharPref = new SharPref(MainActivity.this);
+        int theme = mSharPref.getCurrentTheme();
+
+        if (theme == GREEN_THEME) {
+            setTheme(R.style.GreenTheme);
+            return;
+        }
+        if (theme == ORANGE_THEME) {
+            setTheme(R.style.OrangeTheme);
+            return;
+        }
+        if (theme == BLUE_THEME) {
+            setTheme(R.style.BlueTheme);
+        }
+    }
+
+    private void showListOfThemes() {
+        Bundle bundle = new Bundle();
+        bundle.putInt("theme", mSharPref.getCurrentTheme());
+
+        ListDialogFragment dialog = new ListDialogFragment();
+        dialog.setArguments(bundle);
+        dialog.show(getSupportFragmentManager(), "ListDialogFragment");
+
+        dialog.setOnSelectThemeListener(new ListDialogFragment.SelectThemeListener() {
+            @Override
+            public void setSelectThemeListener(int theme) {
+                setAppTheme(theme);
+            }
+        });
+    }
+
+    private void setAppTheme(int theme) {
+        mSharPref.setTheme(theme);
+
+        startActivity(new Intent(MainActivity.this, MainActivity.class));
+        finish();
     }
 
 }

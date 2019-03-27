@@ -24,14 +24,17 @@
 
             <Button
                 style="@style/ButtonsNumberDark"
+                android:textColor="?attr/basicButtonTextColor"
                 android:onClick="onAddNumber"
                 android:text="@string/b_seven" />
             <Button
                 style="@style/ButtonsNumberDark"
+                android:textColor="?attr/basicButtonTextColor"
                 android:onClick="onAddNumber"
                 android:text="@string/b_eight" />
             <Button
                 style="@style/ButtonsNumberDark"
+                android:textColor="?attr/basicButtonTextColor"
                 android:onClick="onAddNumber"
                 android:text="@string/b_nine" />
 
@@ -43,14 +46,17 @@
 
             <Button
                 style="@style/ButtonsNumberDark"
+                android:textColor="?attr/basicButtonTextColor"
                 android:onClick="onAddNumber"
                 android:text="@string/b_four" />
             <Button
                 style="@style/ButtonsNumberDark"
+                android:textColor="?attr/basicButtonTextColor"
                 android:onClick="onAddNumber"
                 android:text="@string/b_five" />
             <Button
                 style="@style/ButtonsNumberDark"
+                android:textColor="?attr/basicButtonTextColor"
                 android:onClick="onAddNumber"
                 android:text="@string/b_six" />
 
@@ -62,14 +68,17 @@
 
             <Button
                 style="@style/ButtonsNumberDark"
+                android:textColor="?attr/basicButtonTextColor"
                 android:onClick="onAddNumber"
                 android:text="@string/b_one" />
             <Button
                 style="@style/ButtonsNumberDark"
+                android:textColor="?attr/basicButtonTextColor"
                 android:onClick="onAddNumber"
                 android:text="@string/b_two" />
             <Button
                 style="@style/ButtonsNumberDark"
+                android:textColor="?attr/basicButtonTextColor"
                 android:onClick="onAddNumber"
                 android:text="@string/b_three" />
 
@@ -81,14 +90,17 @@
 
             <Button
                 style="@style/ButtonsNumberDark"
+                android:textColor="?attr/basicButtonTextColor"
                 android:onClick="onAddNumber"
                 android:text="@string/b_dot" />
             <Button
                 style="@style/ButtonsNumberDark"
+                android:textColor="?attr/basicButtonTextColor"
                 android:onClick="onAddNumber"
                 android:text="@string/b_zero" />
             <Button
                 style="@style/ButtonsNumberDark"
+                android:textColor="?attr/basicButtonTextColor"
                 android:onClick="onEqual"
                 android:text="@string/b_equal" />
 
@@ -108,27 +120,33 @@
 
             <Button
                 style="@style/ButtonsNumberLight"
+                android:textColor="?attr/basicButtonTextColor"
                 android:onClick="onDelAll"
                 android:text="@string/b_del_all" />
             <Button
                 style="@style/ButtonsNumberLight"
+                android:textColor="?attr/basicButtonTextColor"
                 android:text="@string/b_del_one"
                 android:textSize="20sp"
                 android:onClick="onDel" />
             <Button
                 style="@style/ButtonsNumberLight"
+                android:textColor="?attr/basicButtonTextColor"
                 android:onClick="onAddOperator"
                 android:text="@string/b_divide" />
             <Button
                 style="@style/ButtonsNumberLight"
+                android:textColor="?attr/basicButtonTextColor"
                 android:onClick="onAddOperator"
                 android:text="@string/b_multiply" />
             <Button
                 style="@style/ButtonsNumberLight"
+                android:textColor="?attr/basicButtonTextColor"
                 android:onClick="onAddOperator"
                 android:text="@string/b_minus" />
             <Button
                 style="@style/ButtonsNumberLight"
+                android:textColor="?attr/basicButtonTextColor"
                 android:onClick="onAddOperator"
                 android:text="@string/b_plus" />
 
@@ -143,7 +161,7 @@
         android:layout_height="wrap_content">
 
         <View
-            android:background="@color/colorGreenLight_not_pressed"
+            android:background="?attr/mainBackground"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

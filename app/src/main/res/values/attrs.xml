@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="theme">
+        <attr name="primaryDarkColor" format="color" />
+        <attr name="navigationBarColor" format="color" />
+        <attr name="mainBackground" format="color" />
+        <attr name="mainTouchedBackground" format="color" />
+        <attr name="buttonNumberBackground" format="color" />
+        <attr name="buttonNumberTouchedBackground" format="color" />
+        <attr name="buttonOptionBackground" format="color" />
+        <attr name="buttonOptionTouchedBackground" format="color" />
+        <attr name="basicButtonTextColor" format="color" />
+        <attr name="additionButtonTextColor" format="color" />
+    </declare-styleable>
+</resources>
