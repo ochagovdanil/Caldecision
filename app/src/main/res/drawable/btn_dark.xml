@@ -2,10 +2,10 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:state_pressed="true" >
-        <color android:color="@color/colorGrayDark_pressed" />
+        <color android:color="?attr/buttonNumberTouchedBackground" />
     </item>
     <item android:state_pressed="false" >
-        <color android:color="@color/colorGrayDark_not_pressed" />
+        <color android:color="?attr/buttonNumberBackground" />
     </item>
 
 </selector>

@@ -29,5 +29,8 @@
     <string name="b_percent">%</string>
     <string name="b_pow">^</string>
     <string name="b_root">√</string>
+    <string name="dialog_list_themes">Select a theme:</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_accept">Accept</string>
 
 </resources>
