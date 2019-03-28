@@ -541,6 +541,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setAppTheme(int theme) {
         mSharPref.setTheme(theme);
+        sCurrentOperator = "0";
 
         startActivity(new Intent(MainActivity.this, MainActivity.class));
         finish();

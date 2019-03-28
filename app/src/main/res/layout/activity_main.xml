@@ -18,14 +18,18 @@
             android:id="@+id/view_delete_all"
             android:background="?attr/primaryDarkColor"
             android:visibility="gone"
+            android:elevation="10dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            tools:targetApi="lollipop" />
         <View
             android:id="@+id/view_error"
             android:background="@color/colorRed"
+            android:elevation="10dp"
             android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            tools:targetApi="lollipop" />
         <ImageView
             android:id="@+id/image_settings"
             android:padding="10dp"
