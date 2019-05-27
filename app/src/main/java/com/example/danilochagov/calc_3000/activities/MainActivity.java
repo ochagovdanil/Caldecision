@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.danilochagov.calc_3000.R;
-import com.example.danilochagov.calc_3000.helpers.ListDialogFragment;
+import com.example.danilochagov.calc_3000.fragments.ListDialogFragment;
 import com.example.danilochagov.calc_3000.helpers.SharPref;
 import com.example.danilochagov.calc_3000.logic.ExpressionsCalculator;
 import com.example.danilochagov.calc_3000.models.EThemes;
