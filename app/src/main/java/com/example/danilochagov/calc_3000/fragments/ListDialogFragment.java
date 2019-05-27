@@ -1,4 +1,4 @@
-package com.example.danilochagov.calc_3000.helpers;
+package com.example.danilochagov.calc_3000.fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 
 import com.example.danilochagov.calc_3000.R;
+import com.example.danilochagov.calc_3000.helpers.SharPref;
 
 public class ListDialogFragment extends DialogFragment {
 
