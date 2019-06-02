@@ -17,17 +17,17 @@
             android:onClick="onSin"
             android:text="@string/b_sin"
             android:textColor="?attr/additionButtonTextColor"
-            style="@style/ButtonsNumberGreen" />
+            style="@style/ButtonsNumberAdditional" />
         <Button
             android:onClick="onLog"
             android:text="@string/b_log"
             android:textColor="?attr/additionButtonTextColor"
-            style="@style/ButtonsNumberGreen" />
+            style="@style/ButtonsNumberAdditional" />
         <Button
             android:onClick="onSqrt"
             android:text="@string/b_root"
             android:textColor="?attr/additionButtonTextColor"
-            style="@style/ButtonsNumberGreen" />
+            style="@style/ButtonsNumberAdditional" />
 
     </LinearLayout>
 
@@ -41,17 +41,17 @@
             android:onClick="onCos"
             android:text="@string/b_cos"
             android:textColor="?attr/additionButtonTextColor"
-            style="@style/ButtonsNumberGreen" />
+            style="@style/ButtonsNumberAdditional" />
         <Button
             android:onClick="onNumberPI"
             android:text="@string/b_number_pi"
             android:textColor="?attr/additionButtonTextColor"
-            style="@style/ButtonsNumberGreen"/>
+            style="@style/ButtonsNumberAdditional"/>
         <Button
             android:onClick="onPow"
             android:text="@string/b_pow"
             android:textColor="?attr/additionButtonTextColor"
-            style="@style/ButtonsNumberGreen" />
+            style="@style/ButtonsNumberAdditional" />
 
     </LinearLayout>
 
@@ -65,17 +65,17 @@
             android:onClick="onTan"
             android:text="@string/b_tan"
             android:textColor="?attr/additionButtonTextColor"
-            style="@style/ButtonsNumberGreen" />
+            style="@style/ButtonsNumberAdditional" />
         <Button
             android:onClick="onNumberE"
             android:text="@string/b_number_e"
             android:textColor="?attr/additionButtonTextColor"
-            style="@style/ButtonsNumberGreen" />
+            style="@style/ButtonsNumberAdditional" />
         <Button
             android:onClick="onPercent"
             android:text="@string/b_percent"
             android:textColor="?attr/additionButtonTextColor"
-            style="@style/ButtonsNumberGreen" />
+            style="@style/ButtonsNumberAdditional" />
 
     </LinearLayout>
 
