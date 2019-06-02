@@ -74,7 +74,7 @@
     <style name="ButtonsNumberGreen">
         <item name="android:stateListAnimator" tools:ignore="NewApi">@null</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:background">@drawable/btn_green</item>
+        <item name="android:background">@drawable/btn_additional</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
