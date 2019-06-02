@@ -19,6 +19,7 @@
     <style name="GreenTheme" parent="AppTheme">
         <item name="colorPrimaryDark">#00bcd4</item>
         <item name="primaryDarkColor">#00bcd4</item>
+        <item name="colorAccent">#18c298</item>
         <item name="android:navigationBarColor" tools:targetApi="lollipop">#000</item>
         <item name="mainBackground">#1DE9B6</item>
         <item name="mainTouchedBackground">#18c298</item>
@@ -28,6 +29,7 @@
     <style name="OrangeTheme" parent="AppTheme">
         <item name="colorPrimaryDark">#DA6D1B</item>
         <item name="primaryDarkColor">#DA6D1B</item>
+        <item name="colorAccent">#DA6D1B</item>
         <item name="android:navigationBarColor" tools:targetApi="lollipop">#000</item>
         <item name="mainBackground">#F88903</item>
         <item name="mainTouchedBackground">#E77F02</item>
@@ -37,6 +39,7 @@
     <style name="BlueTheme" parent="AppTheme">
         <item name="colorPrimaryDark">#157AF3</item>
         <item name="primaryDarkColor">#157AF3</item>
+        <item name="colorAccent">#157AF3</item>
         <item name="android:navigationBarColor" tools:targetApi="lollipop">#000</item>
         <item name="mainBackground">#247EEE</item>
         <item name="mainTouchedBackground">#166DDA</item>
