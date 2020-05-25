@@ -156,6 +156,7 @@
 
 
     <LinearLayout
+        android:id="@+id/view_green_vertical_line"
         android:layout_weight="11"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

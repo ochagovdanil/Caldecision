@@ -32,5 +32,7 @@
     <string name="dialog_list_themes">Select a theme:</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_accept">Accept</string>
+    <string name="drawer_layout_open">Open Drawer layout</string>
+    <string name="drawer_layout_close">Close Drawer layout</string>
 
 </resources>

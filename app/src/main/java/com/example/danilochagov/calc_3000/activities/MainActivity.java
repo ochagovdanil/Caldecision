@@ -4,14 +4,19 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.danilochagov.calc_3000.R;
 import com.example.danilochagov.calc_3000.fragments.ListDialogFragment;
@@ -50,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
 
         mExpressionsCalculator = new ExpressionsCalculator();
         mDecimalFormat = new DecimalFormat("#.######");
+
+        moveContentWithDrawerLayout();
 
         ImageView imageView = findViewById(R.id.image_settings);
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -130,28 +137,28 @@ public class MainActivity extends AppCompatActivity {
                         mMain_display.setText(
                                 mDecimalFormat.format(
                                         mExpressionsCalculator.addition(numbers[0],
-                                        numbers[1])) + operator);
+                                                numbers[1])) + operator);
                         break;
 
                     case MINUS:
                         mMain_display.setText(
                                 mDecimalFormat.format(
                                         mExpressionsCalculator.minus(numbers[0],
-                                        numbers[1])) + operator);
+                                                numbers[1])) + operator);
                         break;
 
                     case MULTIPLY:
                         mMain_display.setText(
                                 mDecimalFormat.format(
                                         mExpressionsCalculator.multiply(numbers[0],
-                                        numbers[1])) + operator);
+                                                numbers[1])) + operator);
                         break;
 
                     case DIVIDE:
                         mMain_display.setText(
                                 mDecimalFormat.format(
                                         mExpressionsCalculator.divide(numbers[0],
-                                        numbers[1])) + operator);
+                                                numbers[1])) + operator);
                 }
 
                 mOld_display.setText(numbers[0] + sCurrentOperator + numbers[1]);
@@ -188,8 +195,8 @@ public class MainActivity extends AppCompatActivity {
                     double[] numbers = mExpressionsCalculator.getTwoNumbers(dis, sCurrentOperator);
                     String new_expression =
                             mDecimalFormat.format(numbers[0]) +
-                            sCurrentOperator +
-                            mDecimalFormat.format(mExpressionsCalculator.sinus(numbers[1]));
+                                    sCurrentOperator +
+                                    mDecimalFormat.format(mExpressionsCalculator.sinus(numbers[1]));
 
                     mMain_display.setText(new_expression);
                 }
@@ -216,8 +223,8 @@ public class MainActivity extends AppCompatActivity {
                     double[] numbers = mExpressionsCalculator.getTwoNumbers(dis, sCurrentOperator);
                     String new_expression =
                             mDecimalFormat.format(numbers[0]) +
-                            sCurrentOperator +
-                            mDecimalFormat.format(mExpressionsCalculator.cosinus(numbers[1]));
+                                    sCurrentOperator +
+                                    mDecimalFormat.format(mExpressionsCalculator.cosinus(numbers[1]));
 
                     mMain_display.setText(new_expression);
                 }
@@ -244,8 +251,8 @@ public class MainActivity extends AppCompatActivity {
                     double[] numbers = mExpressionsCalculator.getTwoNumbers(dis, sCurrentOperator);
                     String new_expression =
                             mDecimalFormat.format(numbers[0]) +
-                            sCurrentOperator +
-                            mDecimalFormat.format(mExpressionsCalculator.tangent(numbers[1]));
+                                    sCurrentOperator +
+                                    mDecimalFormat.format(mExpressionsCalculator.tangent(numbers[1]));
 
                     mMain_display.setText(new_expression);
                 }
@@ -272,8 +279,8 @@ public class MainActivity extends AppCompatActivity {
                     double[] numbers = mExpressionsCalculator.getTwoNumbers(dis, sCurrentOperator);
                     String new_expression =
                             mDecimalFormat.format(numbers[0]) +
-                            sCurrentOperator +
-                            mDecimalFormat.format(mExpressionsCalculator.logarithm(numbers[1]));
+                                    sCurrentOperator +
+                                    mDecimalFormat.format(mExpressionsCalculator.logarithm(numbers[1]));
 
                     mMain_display.setText(new_expression);
                 }
@@ -300,8 +307,8 @@ public class MainActivity extends AppCompatActivity {
                     double[] numbers = mExpressionsCalculator.getTwoNumbers(dis, sCurrentOperator);
                     String new_expression =
                             mDecimalFormat.format(numbers[0]) +
-                            sCurrentOperator +
-                            mDecimalFormat.format(mExpressionsCalculator.square(numbers[1]));
+                                    sCurrentOperator +
+                                    mDecimalFormat.format(mExpressionsCalculator.square(numbers[1]));
 
                     mMain_display.setText(new_expression);
                 }
@@ -328,8 +335,8 @@ public class MainActivity extends AppCompatActivity {
                     double[] numbers = mExpressionsCalculator.getTwoNumbers(dis, sCurrentOperator);
                     String new_expression =
                             mDecimalFormat.format(numbers[0]) +
-                            sCurrentOperator +
-                            mDecimalFormat.format(mExpressionsCalculator.percent(numbers[1]));
+                                    sCurrentOperator +
+                                    mDecimalFormat.format(mExpressionsCalculator.percent(numbers[1]));
 
                     mMain_display.setText(new_expression);
                 }
@@ -356,7 +363,7 @@ public class MainActivity extends AppCompatActivity {
                     mOld_display.setText(dis);
                     mMain_display.setText(mDecimalFormat.format(
                             mExpressionsCalculator.pow(number[0],
-                            number[1])));
+                                    number[1])));
 
                     return;
                 }
@@ -368,28 +375,28 @@ public class MainActivity extends AppCompatActivity {
                         mMain_display.setText(
                                 mDecimalFormat.format(
                                         mExpressionsCalculator.addition(numbers[0],
-                                        numbers[1])));
+                                                numbers[1])));
                         break;
 
                     case MINUS:
                         mMain_display.setText(
                                 mDecimalFormat.format(
                                         mExpressionsCalculator.minus(numbers[0],
-                                        numbers[1])));
+                                                numbers[1])));
                         break;
 
                     case MULTIPLY:
                         mMain_display.setText(
                                 mDecimalFormat.format(
                                         mExpressionsCalculator.multiply(numbers[0],
-                                        numbers[1])));
+                                                numbers[1])));
                         break;
 
                     case DIVIDE:
                         mMain_display.setText(
                                 mDecimalFormat.format(
                                         mExpressionsCalculator.divide(numbers[0],
-                                        numbers[1])));
+                                                numbers[1])));
                 }
 
                 mOld_display.setText(numbers[0] + sCurrentOperator + numbers[1]);
@@ -547,4 +554,37 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
+    private void moveContentWithDrawerLayout() {
+        final DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        final LinearLayout content = findViewById(R.id.main_curtain);
+        final LinearLayout greenVerticalLine = findViewById(R.id.view_green_vertical_line);
+
+        // remove shadow when opening the curtain
+        drawerLayout.setScrimColor(Color.TRANSPARENT);
+
+        ActionBarDrawerToggle actionBarDrawerToggle =
+                new ActionBarDrawerToggle(
+                        MainActivity.this,
+                        drawerLayout,
+                        R.string.drawer_layout_open,
+                        R.string.drawer_layout_close) {
+                    @Override
+                    public void onDrawerSlide(View drawerView, float slideOffset) {
+                        super.onDrawerSlide(drawerView, slideOffset);
+
+                        // move the content
+                        float slideX = drawerView.getWidth() * slideOffset;
+                        content.setTranslationX(-slideX);
+
+                        // remove or show the green vertical line when opening the curtain
+                        if (slideOffset > 0) {
+                            greenVerticalLine.setVisibility(View.GONE);
+                        } else if (slideOffset == 0) {
+                            greenVerticalLine.setVisibility(View.VISIBLE);
+                        }
+                    }
+                };
+
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+    }
 }
