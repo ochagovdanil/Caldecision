@@ -68,14 +68,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v4.widget.DrawerLayout
+        <androidx.drawerlayout.widget.DrawerLayout
             android:id="@+id/drawer_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <include layout="@layout/partial_keyboard_default" />
 
-            <android.support.design.widget.NavigationView
+            <com.google.android.material.navigation.NavigationView
                 android:id="@+id/navigation_view"
                 android:layout_gravity="end"
                 android:fitsSystemWindows="true"
@@ -84,9 +84,9 @@
 
                 <include layout="@layout/partial_keyboard_addition" />
 
-            </android.support.design.widget.NavigationView>
+            </com.google.android.material.navigation.NavigationView>
 
-        </android.support.v4.widget.DrawerLayout>
+        </androidx.drawerlayout.widget.DrawerLayout>
 
     </LinearLayout>
 
