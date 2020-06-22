@@ -7,8 +7,6 @@ _Here is it_
   <img src="screenshots/screenshot-3.png" width="350px" />
 </div> <br />
 
-_Caldecision - a calculator app for Android on Java. This app has the familiar view and lots of functions._
-
  * Name - Caldecision
  * Android 4.0(API 14) or higher
  * Version of app - 3.1
